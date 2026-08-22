@@ -13,7 +13,19 @@
     "emails": "Resend",
     "deploy": "GitHub -> Vercel auto-deploy"
   },
-  "stage": "definicion-marca",
+  "stage": "planning-admin (plan detallado escrito, listo para ejecutar; dominio pendiente de DNS)",
+  "planes_implementacion": {
+    "admin": "docs/superpowers/plans/2026-08-22-realization-admin-view.md — 10 tasks TDD: scaffold, Prisma schema, auth, clientes+estado de cuenta, modalidades, venta de pase (compra+tickets+pago), ficha de cliente, reservas+checkin manual, dashboard Hoy, deploy. Empieza ahora.",
+    "cliente": "docs/superpowers/plans/2026-08-22-realization-client-view.md — 7 tasks TDD: auth, saldo, racha, avisar ausencia, historial, cron de penalizacion 24hs, deploy. Se ejecuta despues del plan de admin."
+  },
+  "infraestructura": {
+    "github_repo": "https://github.com/juancasareto/realization-pass-control (publico, cuenta juancasareto)",
+    "vercel_proyecto": "realization-pass-control, bajo team juancasareto-7021s-projects (auto-deploy conectado al repo)",
+    "vercel_url_default": "https://realization-pass-control.vercel.app",
+    "dominio_objetivo": "realizationpc.vwisesoft.com",
+    "dominio_estado": "Alias agregado en Vercel (vercel domains add + vercel alias), pendiente de registro CNAME en el DNS de Hostinger (realizationpc -> cname.vercel-dns.com) porque el dominio vwisesoft.com no tiene los nameservers delegados a Vercel.",
+    "landing_actual": "index.html en la raiz del repo = copia del brand book, como placeholder hasta que exista el scaffold real de la app."
+  },
   "marca": {
     "logo_fuente": "shared/brand/logo.jpeg (isotipo original subido por el cliente)",
     "colores": {
