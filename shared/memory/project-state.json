@@ -1,0 +1,56 @@
+{
+  "project": "Realization pass control",
+  "objetivo": "Plataforma de cobro y control de acceso de usuarios, para negocio de muro de escalada",
+  "stack": {
+    "frontend": "React 18 + Vite + TypeScript + Tailwind CSS v4",
+    "backend": "Express + TypeScript sobre Vercel Serverless Functions",
+    "db": "Neon Postgres",
+    "orm": "Prisma v7",
+    "auth": "JWT (365d) + Google OAuth opcional, roles CLIENTE/ADMIN (futuro PROFESOR)",
+    "qr": "html5-qrcode v2.3.8",
+    "geocoding": "Nominatim (OpenStreetMap, gratis)",
+    "pagos": "Mercado Pago SDK + registro manual (efectivo/transferencia/tarjeta)",
+    "emails": "Resend",
+    "deploy": "GitHub -> Vercel auto-deploy"
+  },
+  "stage": "definicion-marca",
+  "marca": {
+    "logo_fuente": "shared/brand/logo.jpeg (isotipo original subido por el cliente)",
+    "colores": {
+      "ink_black": "#0B0B0C",
+      "summit_gold": "#F1B400",
+      "chalk_white": "#F3F0E8",
+      "rock_grey": "#A49C8A",
+      "estado_good": "#4FAE6D",
+      "estado_warn": "#D97B29",
+      "estado_critical": "#E1503D"
+    },
+    "tipografia": {
+      "display": "Anton (titulos, saldo, cartelizacion)",
+      "body": "Manrope (texto de UI)",
+      "utility_mono": "JetBrains Mono (hex, specs, contadores)"
+    },
+    "tema": "Unico, dark-first (coherente con el isotipo original sobre fondo negro). No se disena version light.",
+    "brand_book_url": "https://claude.ai/code/artifact/6cf66790-caf8-414a-b55c-f232de15d647"
+  },
+  "decisions": [
+    "No integrar con AsistCheck: modelo de datos incompatible (control de asistencia laboral vs consumo de cuenta corriente). Se construye propio, reusando patrón arquitectónico y gotchas.",
+    "Concepto central del negocio: el check-in NO es el dato principal (como en AsistCheck), es la interfaz de consumo de un ticket ya comprado. El corazón del sistema son cuentas corrientes y cobros.",
+    "Modelo de datos definido: Cliente, Admin, Plan, Compra, Ticket (entidad propia, no contador), Reserva, CheckIn, Pago.",
+    "Ticket como entidad de primera clase (no contador en Plan) para trazabilidad y auditoría de consumos.",
+    "Regla 24hs se implementa con cron diario 23:59 que marca reservas sin CheckIn como asistio=true y consume el ticket, con mail de aviso al cliente.",
+    "Arquitectura de roles: paginas fisicamente separadas por rol (ClientePage / AdminPage), no ocultamiento de botones. JWT con {id, rol}, middlewares requireAuth/requireRol, ProtectedRoute en frontend.",
+    "App CLIENTE: mobile-first, una sola pantalla scrolleable, foco en 'saldo siempre visible' (tickets restantes + vencimiento), boton de fichar contextual segun GPS, PWA instalable.",
+    "App ADMIN (Dani): desktop-first responsive, dashboard 'Hoy', gestion de alumnos/reservas/cobros/planes, reportes. Override manual de check-in es funcionalidad critica (bateria descargada, sin señal, olvido).",
+    "Prioridad de desarrollo (por valor, no por lo 'sexy'): 1) CRM + Cliente con saldo visible, 2) Planes+Compras+Cobros, 3) Reservas + regla 24hs, 4) Panel Admin con override manual, 5) Check-in QR+GPS, 6) Reportes. Dani puede seguir controlando manual las primeras semanas.",
+    "Riesgo de falsos check-ins (QR estático compartible) impacta directamente la plata en Realization (a diferencia de AsistCheck). Recomendacion inicial: confiar + auditar ante reclamo + device fingerprinting (FingerprintJS free tier), con foto/hash como opcion futura si hay abuso.",
+    "Gotchas tecnicos criticos a respetar desde el diseño: GPS con enableHighAccuracy+maximumAge:0, radio de geofence 150-200m en interiores, await antes de responder en serverless (nunca notificaciones sin await), timezone Postgres UTC vs UTC-3 (setTypeParser), instrucciones manuales de permisos para iOS PWA.",
+    "Se revisó el repo johndavedecano/laragym (Laravel+SvelteKit, gimnasio por membresia/tiempo) como benchmark. Stack no reusable. Se descarta el modelo de suscripcion por vencimiento (opuesto al de tickets consumibles de Realization). Se rescatan 2 ideas: (1) desacoplar Plan de Modalidad en vez de 8 planes hardcodeados, para poder agregar variantes (ej. pase x6) sin tocar esquema; (2) tabla 'activities' como audit log generico, valiosa porque hay plata y reclamos de por medio. Se descarta multi-sucursal (branches): Realization es un solo muro.",
+    "Gamificacion para v1: solo racha de asistencia (contador de semanas seguidas sin faltar, calculable con CheckIn existente). Barra tematica, badges por clases acumuladas, grados/vias y leaderboard quedan descartados/pospuestos, no entran en el alcance actual."
+  ],
+  "referencias": {
+    "consultoria_tecnica": "AsistCheck (Equipo Core) - dos respuestas por email con recomendaciones de arquitectura, stack, modelo de datos, roles y gotchas. Detalle completo en shared/memory/asistcheck-consultoria.md",
+    "benchmark_gym": "github.com/johndavedecano/laragym - revisado como benchmark de gimnasio, stack no reusable, ideas puntuales incorporadas a decisions."
+  },
+  "last_updated": "2026-08-22"
+}
