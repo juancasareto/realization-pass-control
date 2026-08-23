@@ -11,7 +11,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') { res.status(405).json({ error: 'Método no permitido.' }); return; }
 
   const { id } = req.query as { id: string };
-  const { estado } = req.body as { estado: 'PRESENTE' | 'AVISO_AUSENCIA' };
+  const { estado } = req.body as { estado: 'PRESENTE' | 'AVISO_AUSENCIA' | 'PENALIZADA' };
 
   const reserva = await prisma.reserva.findUnique({ where: { id } });
   if (!reserva) { res.status(404).json({ error: 'No encontramos esa reserva.' }); return; }
@@ -47,5 +47,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return;
   }
 
-  res.status(422).json({ error: 'Estado inválido. Usá PRESENTE o AVISO_AUSENCIA.' });
+  if (estado === 'PENALIZADA') {
+    // Alumno faltó sin aviso: se penaliza el ticket inmediatamente (sin esperar los 7 días del cron).
+    await prisma.reserva.update({ where: { id }, data: { estadoAsistencia: 'PENALIZADA' } });
+    if (reserva.ticketId) {
+      await prisma.ticket.update({ where: { id: reserva.ticketId }, data: { estado: 'PENALIZADO' } });
+    }
+    await prisma.activity.create({ data: { actorId: payload.id, actorRol: 'ADMIN', accion: 'penalizar_manual', detalle: { reservaId: id } } });
+    res.status(200).json({ ok: true });
+    return;
+  }
+
+  res.status(422).json({ error: 'Estado inválido. Usá PRESENTE, AVISO_AUSENCIA o PENALIZADA.' });
 }

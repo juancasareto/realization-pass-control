@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { prisma } from '../../_lib/prisma.js';
 import { requireAuth, requireRol } from '../../_lib/auth.js';
+
 const SIETE_DIAS_MS = 7 * 24 * 60 * 60 * 1000;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -9,20 +10,43 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!requireRol(payload, 'ADMIN', res)) return;
 
   if (req.method === 'GET') {
-    const { fecha } = req.query as { fecha: string };
-    const inicio = new Date(`${fecha}T00:00:00.000Z`);
-    const fin = new Date(`${fecha}T23:59:59.999Z`);
+    const { fecha, desde, hasta, tipoClase, profesorId } = req.query as {
+      fecha?: string; desde?: string; hasta?: string; tipoClase?: string; profesorId?: string;
+    };
+
+    let inicio: Date; let fin: Date;
+    if (desde && hasta) {
+      inicio = new Date(`${desde}T00:00:00.000Z`);
+      fin = new Date(`${hasta}T23:59:59.999Z`);
+    } else if (fecha) {
+      inicio = new Date(`${fecha}T00:00:00.000Z`);
+      fin = new Date(`${fecha}T23:59:59.999Z`);
+    } else {
+      res.status(422).json({ error: 'Falta fecha o rango (desde/hasta).' });
+      return;
+    }
 
     const reservas = await prisma.reserva.findMany({
-      where: { fechaHora: { gte: inicio, lte: fin } },
-      include: { cliente: true },
+      where: {
+        fechaHora: { gte: inicio, lte: fin },
+        ...(tipoClase ? { tipoClase } : {}),
+        ...(profesorId ? { horario: { profesorId } } : {}),
+      },
+      include: { cliente: true, horario: { include: { profesor: true } } },
       orderBy: { fechaHora: 'asc' },
     });
 
     res.status(200).json({
       reservas: reservas.map((r) => ({
-        id: r.id, clienteId: r.clienteId, clienteNombre: r.cliente.nombre,
-        fechaHora: r.fechaHora, tipoClase: r.tipoClase, estadoAsistencia: r.estadoAsistencia,
+        id: r.id,
+        clienteId: r.clienteId,
+        clienteNombre: r.cliente.nombre,
+        fechaHora: r.fechaHora,
+        tipoClase: r.tipoClase,
+        estadoAsistencia: r.estadoAsistencia,
+        horarioId: r.horarioId,
+        cupoMaximo: r.horario?.cupoMaximo ?? null,
+        profesorNombre: r.horario?.profesor?.nombre ?? null,
       })),
     });
     return;
@@ -31,8 +55,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'POST') {
     const accion = (req.query?.accion) as string | undefined;
 
-    // Check-in libre: alumno se presenta sin reserva previa.
-    // Consume el próximo ticket disponible del último plan y crea una reserva PRESENTE + check-in.
     if (accion === 'checkin_libre') {
       const { clienteId, tipoClase } = req.body as { clienteId: string; tipoClase?: string };
 
@@ -70,8 +92,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return;
     }
 
-    // Aviso de ausencia con opción de "ticket extra al final": no reprograma, agrega un ticket
-    // disponible a la última compra activa. Requiere reservaId de la reserva a la que se le avisa.
     if (accion === 'aviso_ticket_extra') {
       const { reservaId } = req.body as { reservaId: string };
 
@@ -96,7 +116,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return;
     }
 
-    // Recupero clásico: alumno vino a otro horario tras una falta pendiente.
+    // Recupero clásico
     const { clienteId, horarioId } = req.body as { clienteId: string; horarioId: string };
 
     const horario = await prisma.horario.findUnique({ where: { id: horarioId } });
@@ -129,6 +149,32 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     await prisma.activity.create({ data: { actorId: payload.id, actorRol: 'ADMIN', accion: 'recupero_clase', detalle: { reservaOriginalId: pendiente.id, nuevaReservaId: nueva.id } } });
 
     res.status(200).json({ reserva: nueva });
+    return;
+  }
+
+  if (req.method === 'DELETE') {
+    const { id } = req.query as { id: string };
+    if (!id) { res.status(422).json({ error: 'Falta el id de la reserva.' }); return; }
+
+    const reserva = await prisma.reserva.findUnique({ where: { id } });
+    if (!reserva) { res.status(404).json({ error: 'No encontramos esa reserva.' }); return; }
+    if (reserva.estadoAsistencia === 'PRESENTE') {
+      res.status(422).json({ error: 'No se puede cancelar una reserva ya marcada como presente.' });
+      return;
+    }
+
+    // Liberar el ticket asociado si existe y estaba consumido/reservado
+    const ticketId = reserva.ticketId;
+    await prisma.reserva.delete({ where: { id } });
+    if (ticketId) {
+      await prisma.ticket.update({ where: { id: ticketId }, data: { estado: 'DISPONIBLE', consumidoAt: null } });
+    }
+
+    await prisma.activity.create({
+      data: { actorId: payload.id, actorRol: 'ADMIN', accion: 'cancelar_reserva', detalle: { reservaId: id, ticketLiberado: ticketId ?? null } },
+    });
+
+    res.status(200).json({ ok: true });
     return;
   }
 
