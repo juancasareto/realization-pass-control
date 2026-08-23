@@ -190,8 +190,20 @@ model Retiro {
   medio     MedioPago
   monto     Decimal   @db.Decimal(10, 2)
   motivo    String
+  categoria String?   // SUELDOS | ALQUILER | SERVICIOS | INSUMOS | RETIRO_SOCIOS | OTRO_EGRESO
   actorId   String
   createdAt DateTime  @default(now())
+}
+
+model IngresoManual {
+  id          String    @id @default(cuid())
+  categoria   String    // DIA_SUELTO | ALQUILER_MURO | OTRO_INGRESO
+  medio       MedioPago
+  monto       Decimal   @db.Decimal(10, 2)
+  descripcion String?
+  clienteId   String?
+  actorId     String
+  createdAt   DateTime  @default(now())
 }
 
 model Activity {
