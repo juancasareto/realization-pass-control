@@ -33,7 +33,7 @@ describe('/api/admin/horarios', () => {
     await handler({ method: 'POST', headers: { authorization: `Bearer ${adminToken}` },
       body: { diaSemana: 4, hora: '20:00', tipoClase: 'Boulder avanzado', profesorId } } as any, createRes);
     expect(createRes.status).toHaveBeenCalledWith(201);
-    expect(createRes.json.mock.calls[0][0].horario.cupoMaximo).toBe(40);
+    expect(createRes.json.mock.calls[0][0].horarios[0].cupoMaximo).toBe(40);
 
     const listRes = mockRes();
     await handler({ method: 'GET', headers: { authorization: `Bearer ${adminToken}` } } as any, listRes);

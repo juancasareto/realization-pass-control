@@ -18,7 +18,7 @@ describe('HorariosPage', () => {
 
     render(<AuthProvider><HorariosPage /></AuthProvider>);
     await waitFor(() => expect(screen.getByText('Boulder avanzado')).toBeInTheDocument());
-    const cells = screen.getAllByText('Marcos');
+    const cells = screen.getAllByText((_, el) => !!el && /Marcos/.test(el.textContent ?? ''));
     expect(cells.length).toBeGreaterThanOrEqual(1);
   });
 });
