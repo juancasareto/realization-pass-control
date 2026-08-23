@@ -4,6 +4,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import { AdminLayout } from './components/AdminLayout';
 import { LoginPage } from './pages/LoginPage';
 import { ClientesPage } from './pages/ClientesPage';
+import { ModalidadesPage } from './pages/ModalidadesPage';
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
           <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
             <Route index element={<div>Hoy (Task 12)</div>} />
             <Route path="clientes" element={<ClientesPage />} />
+            <Route path="modalidades" element={<ModalidadesPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
