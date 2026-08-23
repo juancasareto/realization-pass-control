@@ -1,0 +1,199 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Rol {
+  ADMIN
+  CLIENTE
+}
+
+enum TipoPlan {
+  LIBRE
+  CLASES
+}
+
+enum EstadoTicket {
+  DISPONIBLE
+  CONSUMIDO
+  PENALIZADO
+}
+
+enum MedioPago {
+  MERCADOPAGO
+  TARJETA
+  TRANSFERENCIA
+  EFECTIVO
+}
+
+enum MetodoCheckIn {
+  QR
+  GPS
+  MANUAL
+}
+
+// Presente/Aviso ausencia/etc son *estados de la reserva*, no del check-in:
+// una reserva puede resolverse sin que exista ningun CheckIn (ej: AVISO_AUSENCIA
+// genera una reserva nueva sin necesidad de un checkin en la original).
+enum EstadoAsistencia {
+  PENDIENTE       // todavia no paso la clase, o paso y nadie la marco
+  PRESENTE        // el alumno vino, ticket consumido
+  AVISO_AUSENCIA  // aviso antes, no se le consume el ticket, se genera una reserva de recupero
+  RECUPERADA      // era una falta pendiente y el alumno vino a otro horario dentro de los 7 dias
+  PENALIZADA      // pasaron 7 dias sin aviso ni recupero, se penaliza el ticket
+}
+
+enum TipoDiaExcepcion {
+  SETEO     // cierra el muro completo: sin reservas, sin venta de Clases para ese dia
+  FERIADO   // solo informativo: no bloquea nada, es un aviso para que el admin decida
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  nombre       String
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model Cliente {
+  id           String    @id @default(cuid())
+  nombre       String
+  email        String    @unique
+  telefono     String?
+  fotoUrl      String?
+  createdAt    DateTime  @default(now())
+  compras      Compra[]
+  reservas     Reserva[]
+  checkIns     CheckIn[]
+  pagos        Pago[]
+}
+
+model Modalidad {
+  id          String   @id @default(cuid())
+  nombre      String
+  tipo        TipoPlan
+  conZapas    Boolean
+  cantTickets Int
+  precio      Decimal  @db.Decimal(10, 2)
+  activo      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  compras     Compra[]
+}
+
+model Profesor {
+  id       String    @id @default(cuid())
+  nombre   String
+  activo   Boolean   @default(true)
+  horarios Horario[]
+}
+
+model Horario {
+  id          String    @id @default(cuid())
+  diaSemana   Int       // ISO: 1=lunes ... 7=domingo
+  hora        String    // "19:00"
+  tipoClase   String    // ej. "Boulder intermedio"
+  cupoMaximo  Int       @default(40)
+  profesorId  String?
+  profesor    Profesor? @relation(fields: [profesorId], references: [id])
+  activo      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  reservas    Reserva[]
+}
+
+model DiaExcepcion {
+  id               String           @id @default(cuid())
+  fecha            DateTime         @unique
+  tipo             TipoDiaExcepcion
+  nota             String?
+  creadoPorSistema Boolean          @default(false)
+  createdAt        DateTime         @default(now())
+}
+
+model Compra {
+  id           String    @id @default(cuid())
+  clienteId    String
+  cliente      Cliente   @relation(fields: [clienteId], references: [id])
+  modalidadId  String
+  modalidad    Modalidad @relation(fields: [modalidadId], references: [id])
+  fechaCompra  DateTime  @default(now())
+  vencimiento  DateTime
+  precioPagado Decimal   @db.Decimal(10, 2)
+  tickets      Ticket[]
+  pago         Pago?
+}
+
+model Ticket {
+  id          String       @id @default(cuid())
+  compraId    String
+  compra      Compra       @relation(fields: [compraId], references: [id])
+  estado      EstadoTicket @default(DISPONIBLE)
+  consumidoAt DateTime?
+  reserva     Reserva?
+}
+
+model Reserva {
+  id               String           @id @default(cuid())
+  clienteId        String
+  cliente          Cliente          @relation(fields: [clienteId], references: [id])
+  ticketId         String?          @unique
+  ticket           Ticket?          @relation(fields: [ticketId], references: [id])
+  horarioId        String?
+  horario          Horario?         @relation(fields: [horarioId], references: [id])
+  fechaHora        DateTime
+  tipoClase        String
+  estadoAsistencia EstadoAsistencia @default(PENDIENTE)
+  // Si esta reserva nacio como recupero de otra (aviso ausencia, o recupero
+  // de una falta pendiente), recuperaDeId apunta a la reserva original.
+  recuperaDeId     String?          @unique
+  recuperaDe       Reserva?         @relation("Recupero", fields: [recuperaDeId], references: [id])
+  recuperadaPor    Reserva?         @relation("Recupero")
+  checkIn          CheckIn?
+  createdAt        DateTime         @default(now())
+}
+
+model CheckIn {
+  id        String        @id @default(cuid())
+  clienteId String
+  cliente   Cliente       @relation(fields: [clienteId], references: [id])
+  reservaId String?       @unique
+  reserva   Reserva?      @relation(fields: [reservaId], references: [id])
+  timestamp DateTime      @default(now())
+  lat       Float?
+  lng       Float?
+  metodo    MetodoCheckIn
+}
+
+model Pago {
+  id                String    @id @default(cuid())
+  clienteId         String
+  cliente           Cliente   @relation(fields: [clienteId], references: [id])
+  compraId          String    @unique
+  compra            Compra    @relation(fields: [compraId], references: [id])
+  monto             Decimal   @db.Decimal(10, 2)
+  medio             MedioPago
+  descuentoAplicado Decimal   @default(0) @db.Decimal(5, 2)
+  mpReferenceId     String?
+  createdAt         DateTime  @default(now())
+}
+
+model Retiro {
+  id        String    @id @default(cuid())
+  medio     MedioPago
+  monto     Decimal   @db.Decimal(10, 2)
+  motivo    String
+  actorId   String
+  createdAt DateTime  @default(now())
+}
+
+model Activity {
+  id        String   @id @default(cuid())
+  actorId   String
+  actorRol  Rol
+  accion    String
+  detalle   Json?
+  createdAt DateTime @default(now())
+}
