@@ -5,6 +5,7 @@ import { AdminLayout } from './components/AdminLayout';
 import { LoginPage } from './pages/LoginPage';
 import { ClientesPage } from './pages/ClientesPage';
 import { ModalidadesPage } from './pages/ModalidadesPage';
+import { HorariosPage } from './pages/HorariosPage';
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
             <Route index element={<div>Hoy (Task 12)</div>} />
             <Route path="clientes" element={<ClientesPage />} />
             <Route path="modalidades" element={<ModalidadesPage />} />
+            <Route path="horarios" element={<HorariosPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
