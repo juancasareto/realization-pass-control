@@ -1,7 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { prisma } from '../../_lib/prisma.js';
 import { requireAuth, requireRol } from '../../_lib/auth.js';
-
 const SIETE_DIAS_MS = 7 * 24 * 60 * 60 * 1000;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -30,6 +29,74 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   if (req.method === 'POST') {
+    const accion = (req.query?.accion) as string | undefined;
+
+    // Check-in libre: alumno se presenta sin reserva previa.
+    // Consume el próximo ticket disponible del último plan y crea una reserva PRESENTE + check-in.
+    if (accion === 'checkin_libre') {
+      const { clienteId, tipoClase } = req.body as { clienteId: string; tipoClase?: string };
+
+      const compra = await prisma.compra.findFirst({
+        where: { clienteId, tickets: { some: { estado: 'DISPONIBLE' } } },
+        include: { tickets: { where: { estado: 'DISPONIBLE' }, take: 1 } },
+        orderBy: { fechaCompra: 'desc' },
+      });
+
+      if (!compra || compra.tickets.length === 0) {
+        res.status(422).json({ error: 'El alumno no tiene tickets disponibles.' });
+        return;
+      }
+
+      if (compra.vencimiento && compra.vencimiento < new Date()) {
+        res.status(422).json({ error: 'El plan del alumno está vencido.' });
+        return;
+      }
+
+      const ticket = compra.tickets[0];
+      const nueva = await prisma.reserva.create({
+        data: {
+          clienteId, ticketId: ticket.id, fechaHora: new Date(),
+          tipoClase: tipoClase ?? 'Libre', estadoAsistencia: 'PRESENTE',
+        },
+      });
+
+      await prisma.ticket.update({ where: { id: ticket.id }, data: { estado: 'CONSUMIDO', consumidoAt: new Date() } });
+      await prisma.checkIn.create({ data: { clienteId, reservaId: nueva.id, metodo: 'MANUAL' } });
+      await prisma.activity.create({
+        data: { actorId: payload.id, actorRol: 'ADMIN', accion: 'checkin_libre', detalle: { reservaId: nueva.id, ticketId: ticket.id } },
+      });
+
+      res.status(200).json({ reserva: nueva });
+      return;
+    }
+
+    // Aviso de ausencia con opción de "ticket extra al final": no reprograma, agrega un ticket
+    // disponible a la última compra activa. Requiere reservaId de la reserva a la que se le avisa.
+    if (accion === 'aviso_ticket_extra') {
+      const { reservaId } = req.body as { reservaId: string };
+
+      const reserva = await prisma.reserva.findUnique({ where: { id: reservaId } });
+      if (!reserva) { res.status(404).json({ error: 'No encontramos esa reserva.' }); return; }
+
+      const ticketId = reserva.ticketId;
+      const compra = ticketId
+        ? await prisma.ticket.findUnique({ where: { id: ticketId } }).then((t) => t ? prisma.compra.findUnique({ where: { id: t.compraId } }) : null)
+        : await prisma.compra.findFirst({ where: { clienteId: reserva.clienteId }, orderBy: { fechaCompra: 'desc' } });
+
+      if (!compra) { res.status(422).json({ error: 'El alumno no tiene una compra activa para agregar el ticket.' }); return; }
+
+      await prisma.reserva.update({ where: { id: reservaId }, data: { estadoAsistencia: 'AVISO_AUSENCIA', ticketId: null } });
+      const ticketExtra = await prisma.ticket.create({ data: { compraId: compra.id, estado: 'DISPONIBLE' } });
+
+      await prisma.activity.create({
+        data: { actorId: payload.id, actorRol: 'ADMIN', accion: 'aviso_ausencia_ticket_extra', detalle: { reservaId, ticketExtraId: ticketExtra.id } },
+      });
+
+      res.status(200).json({ ok: true, ticketExtraId: ticketExtra.id });
+      return;
+    }
+
+    // Recupero clásico: alumno vino a otro horario tras una falta pendiente.
     const { clienteId, horarioId } = req.body as { clienteId: string; horarioId: string };
 
     const horario = await prisma.horario.findUnique({ where: { id: horarioId } });

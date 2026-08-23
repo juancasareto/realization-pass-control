@@ -15,5 +15,5 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const token = signToken({ id: admin.id, rol: 'ADMIN' });
-  res.status(200).json({ token, nombre: admin.nombre });
+  res.status(200).json({ token, nombre: admin.nombre, email: admin.email, rol: 'ADMIN' });
 }
