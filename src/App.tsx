@@ -3,6 +3,7 @@ import { AuthProvider } from './lib/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AdminLayout } from './components/AdminLayout';
 import { LoginPage } from './pages/LoginPage';
+import { DashboardHoyPage } from './pages/DashboardHoyPage';
 import { ClientesPage } from './pages/ClientesPage';
 import { ModalidadesPage } from './pages/ModalidadesPage';
 import { HorariosPage } from './pages/HorariosPage';
@@ -19,7 +20,7 @@ export default function App() {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
-            <Route index element={<div>Hoy (Task 12)</div>} />
+            <Route index element={<DashboardHoyPage />} />
             <Route path="clientes" element={<ClientesPage />} />
             <Route path="clientes/:id" element={<FichaClientePage />} />
             <Route path="clientes/:clienteId/vender" element={<VentaPasePage />} />
