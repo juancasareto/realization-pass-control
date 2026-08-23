@@ -6,6 +6,7 @@ import { LoginPage } from './pages/LoginPage';
 import { ClientesPage } from './pages/ClientesPage';
 import { ModalidadesPage } from './pages/ModalidadesPage';
 import { HorariosPage } from './pages/HorariosPage';
+import { CalendarioPage } from './pages/CalendarioPage';
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
             <Route path="clientes" element={<ClientesPage />} />
             <Route path="modalidades" element={<ModalidadesPage />} />
             <Route path="horarios" element={<HorariosPage />} />
+            <Route path="calendario" element={<CalendarioPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
