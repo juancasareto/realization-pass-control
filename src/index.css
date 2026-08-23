@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #0b0b0c;
+  --ink-raised: #161512;
+  --ink-line: #2a2822;
+  --gold: #f1b400;
+  --gold-soft: #ffd54a;
+  --chalk: #f3f0e8;
+  --rock: #a49c8a;
+  --rock-dim: #6b6456;
+  --good: #4fae6d;
+  --warn: #d97b29;
+  --crit: #e1503d;
+  --aviso: #e08a3c;
+}
+
+body { background: var(--ink); color: var(--chalk); font-family: 'Manrope', -apple-system, sans-serif; }
