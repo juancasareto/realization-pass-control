@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { prisma } from '../_lib/prisma';
+import { prisma } from '../_lib/prisma.js';
 
 const SIETE_DIAS_MS = 7 * 24 * 60 * 60 * 1000;
 

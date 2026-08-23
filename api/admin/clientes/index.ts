@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { prisma } from '../../_lib/prisma';
-import { requireAuth, requireRol } from '../../_lib/auth';
-import { calcularEstadoCuenta, type EstadoCuenta } from '../../_lib/estadoCuenta';
+import { prisma } from '../../_lib/prisma.js';
+import { requireAuth, requireRol } from '../../_lib/auth.js';
+import { calcularEstadoCuenta, type EstadoCuenta } from '../../_lib/estadoCuenta.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const payload = requireAuth(req, res);

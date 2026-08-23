@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { prisma } from '../../_lib/prisma';
-import { requireAuth, requireRol } from '../../_lib/auth';
+import { prisma } from '../../_lib/prisma.js';
+import { requireAuth, requireRol } from '../../_lib/auth.js';
 
 const MEDIOS = ['EFECTIVO', 'TRANSFERENCIA', 'TARJETA', 'MERCADOPAGO'] as const;
 

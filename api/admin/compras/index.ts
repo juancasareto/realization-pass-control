@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { prisma } from '../../_lib/prisma';
-import { requireAuth, requireRol } from '../../_lib/auth';
-import { esDiaDeSeteo } from '../dias-excepcion/index';
+import { prisma } from '../../_lib/prisma.js';
+import { requireAuth, requireRol } from '../../_lib/auth.js';
+import { esDiaDeSeteo } from '../dias-excepcion/index.js';
 
 const DIAS_VENCIMIENTO = 60;
 const OFFSET_ART_HORAS = 3; // Argentina es UTC-3 fijo, sin horario de verano.

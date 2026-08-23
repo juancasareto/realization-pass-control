@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { prisma } from '../../_lib/prisma';
-import { requireAuth, requireRol } from '../../_lib/auth';
+import { prisma } from '../../_lib/prisma.js';
+import { requireAuth, requireRol } from '../../_lib/auth.js';
 
 const SIETE_DIAS_MS = 7 * 24 * 60 * 60 * 1000;
 

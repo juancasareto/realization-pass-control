@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import bcrypt from 'bcryptjs';
-import { prisma } from '../_lib/prisma';
-import { signToken } from '../_lib/auth';
+import { prisma } from '../_lib/prisma.js';
+import { signToken } from '../_lib/auth.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') { res.status(405).json({ error: 'Método no permitido.' }); return; }

@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { prisma } from '../../_lib/prisma';
-import { requireAuth, requireRol } from '../../_lib/auth';
-import { calcularEstadoCuenta } from '../../_lib/estadoCuenta';
+import { prisma } from '../../_lib/prisma.js';
+import { requireAuth, requireRol } from '../../_lib/auth.js';
+import { calcularEstadoCuenta } from '../../_lib/estadoCuenta.js';
 
 const SIETE_DIAS_MS = 7 * 24 * 60 * 60 * 1000;
 
