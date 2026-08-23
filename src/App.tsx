@@ -9,6 +9,7 @@ import { HorariosPage } from './pages/HorariosPage';
 import { CalendarioPage } from './pages/CalendarioPage';
 import { VentaPasePage } from './pages/VentaPasePage';
 import { FichaClientePage } from './pages/FichaClientePage';
+import { ReservasPage } from './pages/ReservasPage';
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
             <Route path="clientes" element={<ClientesPage />} />
             <Route path="clientes/:id" element={<FichaClientePage />} />
             <Route path="clientes/:clienteId/vender" element={<VentaPasePage />} />
+            <Route path="reservas" element={<ReservasPage />} />
             <Route path="modalidades" element={<ModalidadesPage />} />
             <Route path="horarios" element={<HorariosPage />} />
             <Route path="calendario" element={<CalendarioPage />} />

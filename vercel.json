@@ -1,5 +1,6 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "rewrites": [{ "source": "/api/(.*)", "destination": "/api/$1" }]
+  "rewrites": [{ "source": "/api/(.*)", "destination": "/api/$1" }],
+  "crons": [{ "path": "/api/cron/penalizar-pendientes", "schedule": "0 3 * * *" }]
 }
