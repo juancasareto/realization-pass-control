@@ -16,7 +16,7 @@ export function HorariosPage() {
   async function cargar() {
     const [h, p] = await Promise.all([
       apiFetch('/api/admin/horarios', {}, token),
-      apiFetch('/api/admin/profesores', {}, token),
+      apiFetch('/api/admin/horarios?resource=profesores', {}, token),
     ]);
     setHorarios(h.horarios);
     setProfesores(p.profesores);

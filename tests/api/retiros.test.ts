@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
 import { prisma } from '../../api/_lib/prisma';
 import { signToken } from '../../api/_lib/auth';
-import handler from '../../api/admin/cobros/retiros';
+import handler from '../../api/admin/cobros/index';
 
 function mockRes() {
   const res: any = {};

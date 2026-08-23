@@ -6,7 +6,7 @@ vi.mock('@vercel/blob', () => ({
   put: vi.fn().mockResolvedValue({ url: 'https://blob.example.com/clientes/fake.jpg' }),
 }));
 
-import handler from '../../api/admin/clientes/[id]/foto';
+import handler from '../../api/admin/clientes/[id]';
 
 function mockRes() {
   const res: any = {};

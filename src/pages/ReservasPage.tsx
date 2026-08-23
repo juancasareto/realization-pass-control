@@ -31,7 +31,7 @@ export function ReservasPage() {
     e.preventDefault();
     setErrorRecupero(null);
     try {
-      await apiFetch('/api/admin/reservas/recuperar', { method: 'POST', body: JSON.stringify({ clienteId: clienteIdRecupero, horarioId: horarioIdRecupero }) }, token);
+      await apiFetch('/api/admin/reservas', { method: 'POST', body: JSON.stringify({ clienteId: clienteIdRecupero, horarioId: horarioIdRecupero }) }, token);
       setClienteIdRecupero('');
       cargar();
     } catch (err) {

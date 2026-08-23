@@ -18,7 +18,7 @@ export function FichaClientePage() {
   useEffect(() => { cargar(); }, [id, token]);
 
   async function subirFoto(base64: string) {
-    await apiFetch(`/api/admin/clientes/${id}/foto`, { method: 'POST', body: JSON.stringify({ fotoBase64: base64 }) }, token);
+    await apiFetch(`/api/admin/clientes/${id}`, { method: 'POST', body: JSON.stringify({ fotoBase64: base64 }) }, token);
     cargar();
   }
 

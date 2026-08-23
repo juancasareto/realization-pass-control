@@ -7,6 +7,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!payload) return;
   if (!requireRol(payload, 'ADMIN', res)) return;
 
+  const resource = (req.query?.resource) as string | undefined;
+
+  if (resource === 'profesores') {
+    if (req.method === 'GET') {
+      const profesores = await prisma.profesor.findMany({ orderBy: { nombre: 'asc' } });
+      res.status(200).json({ profesores });
+      return;
+    }
+    if (req.method === 'POST') {
+      const { nombre } = req.body as { nombre: string };
+      const profesor = await prisma.profesor.create({ data: { nombre } });
+      res.status(201).json({ profesor });
+      return;
+    }
+    res.status(405).json({ error: 'Método no permitido.' });
+    return;
+  }
+
   if (req.method === 'GET') {
     const horarios = await prisma.horario.findMany({ include: { profesor: true }, orderBy: [{ diaSemana: 'asc' }, { hora: 'asc' }] });
     res.status(200).json({

@@ -10,7 +10,7 @@ describe('HorariosPage', () => {
       if (path === '/api/admin/horarios') {
         return Promise.resolve({ horarios: [{ id: '1', diaSemana: 4, hora: '20:00', tipoClase: 'Boulder avanzado', cupoMaximo: 40, profesorId: 'prof1', profesorNombre: 'Marcos', activo: true }] });
       }
-      if (path === '/api/admin/profesores') {
+      if (path === '/api/admin/horarios?resource=profesores') {
         return Promise.resolve({ profesores: [{ id: 'prof1', nombre: 'Marcos', activo: true }] });
       }
       return Promise.resolve({});

@@ -22,7 +22,7 @@ export function CobrosPage() {
 
   async function handleRetiro(e: FormEvent) {
     e.preventDefault();
-    await apiFetch('/api/admin/cobros/retiros', { method: 'POST', body: JSON.stringify({ medio, monto, motivo }) }, token);
+    await apiFetch('/api/admin/cobros', { method: 'POST', body: JSON.stringify({ medio, monto, motivo }) }, token);
     setMonto(0);
     setMotivo('');
     cargar();

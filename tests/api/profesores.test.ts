@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
 import { prisma } from '../../api/_lib/prisma';
 import { signToken } from '../../api/_lib/auth';
-import handler from '../../api/admin/profesores/index';
+import handler from '../../api/admin/horarios/index';
 
 function mockRes() {
   const res: any = {};
@@ -26,11 +26,11 @@ describe('/api/admin/profesores', () => {
 
   it('creates and lists a profesor', async () => {
     const createRes = mockRes();
-    await handler({ method: 'POST', headers: { authorization: `Bearer ${adminToken}` }, body: { nombre: 'Sofía' } } as any, createRes);
+    await handler({ method: 'POST', headers: { authorization: `Bearer ${adminToken}` }, query: { resource: 'profesores' }, body: { nombre: 'Sofía' } } as any, createRes);
     expect(createRes.status).toHaveBeenCalledWith(201);
 
     const listRes = mockRes();
-    await handler({ method: 'GET', headers: { authorization: `Bearer ${adminToken}` } } as any, listRes);
+    await handler({ method: 'GET', headers: { authorization: `Bearer ${adminToken}` }, query: { resource: 'profesores' } } as any, listRes);
     expect(listRes.json.mock.calls[0][0].profesores.some((p: any) => p.nombre === 'Sofía')).toBe(true);
   });
 });
