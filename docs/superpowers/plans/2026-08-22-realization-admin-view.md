@@ -1234,6 +1234,8 @@ Expected: PASS
 // tests/src/ClientesPage.test.tsx
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import { AuthProvider } from '../../src/lib/AuthContext';
 import { ClientesPage } from '../../src/pages/ClientesPage';
 import * as apiClient from '../../src/lib/apiClient';
 
@@ -1243,12 +1245,19 @@ describe('ClientesPage', () => {
       clientes: [{ id: '1', nombre: 'María', email: 'm@x.com', ticketsDisponibles: 8, vencimiento: null, estado: 'activo' }],
     });
 
-    render(<ClientesPage />);
+    // ClientesPage calls useAuth() (needs AuthProvider) and renders <Link> (needs a Router) —
+    // both wrappers are required or the render throws before any assertion runs.
+    render(
+      <AuthProvider>
+        <MemoryRouter><ClientesPage /></MemoryRouter>
+      </AuthProvider>
+    );
     await waitFor(() => expect(screen.getByText('María')).toBeInTheDocument());
     expect(screen.getByText('Activo')).toBeInTheDocument();
 
     fireEvent.change(screen.getByPlaceholderText('Buscar por nombre o email'), { target: { value: 'mar' } });
-    await waitFor(() => expect(fetchSpy).toHaveBeenLastCalledWith(expect.stringContaining('q=mar'), {}, undefined));
+    // AuthProvider's initial token is null (no rpc_token in jsdom's localStorage), not undefined.
+    await waitFor(() => expect(fetchSpy).toHaveBeenLastCalledWith(expect.stringContaining('q=mar'), {}, null));
   });
 });
 ```
@@ -1456,6 +1465,7 @@ Expected: PASS
 // tests/src/ModalidadesPage.test.tsx
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { AuthProvider } from '../../src/lib/AuthContext';
 import { ModalidadesPage } from '../../src/pages/ModalidadesPage';
 import * as apiClient from '../../src/lib/apiClient';
 
@@ -1468,11 +1478,13 @@ describe('ModalidadesPage', () => {
       return Promise.resolve({ modalidad: {} });
     });
 
-    render(<ModalidadesPage />);
+    // ModalidadesPage calls useAuth() — needs AuthProvider or the render throws.
+    render(<AuthProvider><ModalidadesPage /></AuthProvider>);
     await waitFor(() => expect(screen.getByText('Pase x4')).toBeInTheDocument());
     fireEvent.click(screen.getByRole('checkbox'));
+    // AuthProvider's initial token is null (no rpc_token in jsdom's localStorage), not undefined.
     await waitFor(() =>
-      expect(apiClient.apiFetch).toHaveBeenCalledWith(expect.stringContaining('/api/admin/modalidades?id=1'), expect.objectContaining({ method: 'PATCH' }), undefined)
+      expect(apiClient.apiFetch).toHaveBeenCalledWith(expect.stringContaining('/api/admin/modalidades?id=1'), expect.objectContaining({ method: 'PATCH' }), null)
     );
   });
 });
@@ -2550,6 +2562,7 @@ Expected: PASS
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from '../../src/lib/AuthContext';
 import { FichaClientePage } from '../../src/pages/FichaClientePage';
 import * as apiClient from '../../src/lib/apiClient';
 
@@ -2565,10 +2578,14 @@ describe('FichaClientePage', () => {
       reservas: [{ id: 'r1', fechaHora: new Date().toISOString(), tipoClase: 'Boulder', estadoAsistencia: 'PENALIZADA' }],
     });
 
+    // FichaClientePage calls useAuth() (needs AuthProvider) and useParams() (needs a Router) —
+    // both wrappers are required or the render throws before any assertion runs.
     render(
-      <MemoryRouter initialEntries={['/admin/clientes/1']}>
-        <Routes><Route path="/admin/clientes/:id" element={<FichaClientePage />} /></Routes>
-      </MemoryRouter>
+      <AuthProvider>
+        <MemoryRouter initialEntries={['/admin/clientes/1']}>
+          <Routes><Route path="/admin/clientes/:id" element={<FichaClientePage />} /></Routes>
+        </MemoryRouter>
+      </AuthProvider>
     );
 
     await waitFor(() => expect(screen.getByText('María González')).toBeInTheDocument());
@@ -3243,10 +3260,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 }
 ```
 
-Add to `vercel.json`:
+**Merge** a `crons` key into the *existing* `vercel.json` from Task 1 — do not replace the file, it must keep `buildCommand`, `outputDirectory`, and `rewrites`:
 
 ```json
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [{ "source": "/api/(.*)", "destination": "/api/$1" }],
   "crons": [{ "path": "/api/cron/penalizar-pendientes", "schedule": "0 3 * * *" }]
 }
 ```
@@ -3831,6 +3851,8 @@ Expected: PASS
 // tests/src/DashboardHoyPage.test.tsx
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import { AuthProvider } from '../../src/lib/AuthContext';
 import { DashboardHoyPage } from '../../src/pages/DashboardHoyPage';
 import * as apiClient from '../../src/lib/apiClient';
 
@@ -3845,7 +3867,13 @@ describe('DashboardHoyPage', () => {
       checkInsRecientes: [{ clienteNombre: 'María G.', timestamp: new Date().toISOString() }],
     });
 
-    render(<DashboardHoyPage />);
+    // DashboardHoyPage calls useAuth() (needs AuthProvider) and renders <Link> (needs a Router) —
+    // both wrappers are required or the render throws before any assertion runs.
+    render(
+      <AuthProvider>
+        <MemoryRouter><DashboardHoyPage /></MemoryRouter>
+      </AuthProvider>
+    );
 
     await waitFor(() => expect(screen.getByText('5')).toBeInTheDocument());
     expect(screen.getByText('8')).toBeInTheDocument();
