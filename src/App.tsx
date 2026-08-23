@@ -7,6 +7,7 @@ import { ClientesPage } from './pages/ClientesPage';
 import { ModalidadesPage } from './pages/ModalidadesPage';
 import { HorariosPage } from './pages/HorariosPage';
 import { CalendarioPage } from './pages/CalendarioPage';
+import { VentaPasePage } from './pages/VentaPasePage';
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
           <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
             <Route index element={<div>Hoy (Task 12)</div>} />
             <Route path="clientes" element={<ClientesPage />} />
+            <Route path="clientes/:clienteId/vender" element={<VentaPasePage />} />
             <Route path="modalidades" element={<ModalidadesPage />} />
             <Route path="horarios" element={<HorariosPage />} />
             <Route path="calendario" element={<CalendarioPage />} />

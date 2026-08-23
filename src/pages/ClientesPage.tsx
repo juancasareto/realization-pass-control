@@ -38,7 +38,7 @@ export function ClientesPage() {
       </div>
       <table className="w-full text-sm">
         <thead className="text-[var(--rock-dim)] uppercase text-xs">
-          <tr><th className="text-left py-2">Nombre</th><th className="text-left py-2">Tickets</th><th className="text-left py-2">Estado</th></tr>
+          <tr><th className="text-left py-2">Nombre</th><th className="text-left py-2">Tickets</th><th className="text-left py-2">Estado</th><th className="text-left py-2"></th></tr>
         </thead>
         <tbody>
           {clientes.map((c) => (
@@ -46,6 +46,7 @@ export function ClientesPage() {
               <td className="py-3"><Link to={`/admin/clientes/${c.id}`} className="hover:text-[var(--gold)]">{c.nombre}</Link></td>
               <td className="py-3 font-mono tabular-nums">{c.ticketsDisponibles}</td>
               <td className="py-3"><EstadoBadge estado={c.estado} /></td>
+              <td className="py-3 text-right"><Link to={`/admin/clientes/${c.id}/vender`} className="text-[var(--gold)] hover:underline">Vender pase</Link></td>
             </tr>
           ))}
         </tbody>
