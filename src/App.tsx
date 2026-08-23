@@ -10,6 +10,7 @@ import { CalendarioPage } from './pages/CalendarioPage';
 import { VentaPasePage } from './pages/VentaPasePage';
 import { FichaClientePage } from './pages/FichaClientePage';
 import { ReservasPage } from './pages/ReservasPage';
+import { CobrosPage } from './pages/CobrosPage';
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
             <Route path="modalidades" element={<ModalidadesPage />} />
             <Route path="horarios" element={<HorariosPage />} />
             <Route path="calendario" element={<CalendarioPage />} />
+            <Route path="cobros" element={<CobrosPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
