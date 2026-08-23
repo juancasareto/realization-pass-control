@@ -25,7 +25,8 @@ describe('GET /api/admin/dashboard/hoy', () => {
 
     const compra = await prisma.compra.create({
       data: { clienteId, modalidadId: modalidad.id, vencimiento: new Date(Date.now() + 30 * 86400000), precioPagado: 18000,
-        tickets: { create: [{ estado: 'DISPONIBLE' }, { estado: 'DISPONIBLE' }] },
+        // 1 disponible + 1 consumido: entra en "planes por vencer" (<=1 disponible)
+        tickets: { create: [{ estado: 'DISPONIBLE' }, { estado: 'CONSUMIDO', consumidoAt: new Date() }] },
         pago: { create: { clienteId, monto: 18000, medio: 'EFECTIVO' } } },
       include: { tickets: true },
     });
@@ -49,7 +50,7 @@ describe('GET /api/admin/dashboard/hoy', () => {
     await prisma.$disconnect();
   });
 
-  it('aggregates checkins, reservas, cobros, alertas de saldo, pendientes de recuperar, e ingresos de 7 dias', async () => {
+  it('aggregates checkins, reservas, cobros, planes por vencer, pendientes de recuperar, e ingresos de 7 dias', async () => {
     const req: any = { method: 'GET', headers: { authorization: `Bearer ${adminToken}` } };
     const res = mockRes();
     await handler(req, res);
@@ -60,8 +61,9 @@ describe('GET /api/admin/dashboard/hoy', () => {
     expect(body.reservasHoy).toBeGreaterThanOrEqual(1);
     expect(body.cobrosHoyTotal).toBeGreaterThanOrEqual(18000);
     expect(body.cobrosHoyPorMedio.EFECTIVO).toBeGreaterThanOrEqual(18000);
-    expect(body.alumnosAlerta.some((a: any) => a.id === clienteId)).toBe(true);
+    expect(body.planesPorVencer.some((a: any) => a.id === clienteId)).toBe(true);
     expect(body.pendientesDeRecuperar.some((p: any) => p.clienteId === clienteId && p.diasRestantes === 4)).toBe(true);
     expect(body.ingresosUltimos7Dias).toHaveLength(7);
+    expect(body.checkInsUltimos7Dias).toHaveLength(7);
   });
 });

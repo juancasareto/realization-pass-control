@@ -60,16 +60,21 @@ model Admin {
 }
 
 model Cliente {
-  id           String    @id @default(cuid())
-  nombre       String
-  email        String    @unique
-  telefono     String?
-  fotoUrl      String?
-  createdAt    DateTime  @default(now())
-  compras      Compra[]
-  reservas     Reserva[]
-  checkIns     CheckIn[]
-  pagos        Pago[]
+  id                       String    @id @default(cuid())
+  nombre                   String
+  email                    String    @unique
+  telefono                 String?
+  fotoUrl                  String?
+  fechaNacimiento          DateTime?
+  direccion                String?
+  dni                      String?   @unique
+  contactoEmergenciaNombre String?
+  contactoEmergenciaTel    String?
+  createdAt                DateTime  @default(now())
+  compras                  Compra[]
+  reservas                 Reserva[]
+  checkIns                 CheckIn[]
+  pagos                    Pago[]
 }
 
 model Modalidad {

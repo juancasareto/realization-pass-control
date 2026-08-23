@@ -34,9 +34,42 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   if (req.method === 'POST') {
-    const { nombre, email, telefono } = req.body as { nombre: string; email: string; telefono?: string };
-    const cliente = await prisma.cliente.create({ data: { nombre, email, telefono } });
-    res.status(201).json({ cliente });
+    const {
+      nombre, email, telefono, fechaNacimiento, direccion, dni,
+      contactoEmergenciaNombre, contactoEmergenciaTel,
+    } = req.body as {
+      nombre: string; email: string; telefono?: string;
+      fechaNacimiento?: string; direccion?: string; dni?: string;
+      contactoEmergenciaNombre?: string; contactoEmergenciaTel?: string;
+    };
+
+    if (!nombre?.trim() || !email?.trim()) {
+      res.status(422).json({ error: 'Nombre y email son obligatorios.' });
+      return;
+    }
+
+    try {
+      const cliente = await prisma.cliente.create({
+        data: {
+          nombre: nombre.trim(),
+          email: email.trim().toLowerCase(),
+          telefono: telefono?.trim() || null,
+          fechaNacimiento: fechaNacimiento ? new Date(fechaNacimiento) : null,
+          direccion: direccion?.trim() || null,
+          dni: dni?.trim() || null,
+          contactoEmergenciaNombre: contactoEmergenciaNombre?.trim() || null,
+          contactoEmergenciaTel: contactoEmergenciaTel?.trim() || null,
+        },
+      });
+      res.status(201).json({ cliente });
+    } catch (err: any) {
+      if (err?.code === 'P2002') {
+        const campo = err.meta?.target?.[0] === 'dni' ? 'DNI' : 'email';
+        res.status(409).json({ error: `Ya existe un alumno con ese ${campo}.` });
+        return;
+      }
+      throw err;
+    }
     return;
   }
 
