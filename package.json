@@ -12,7 +12,8 @@
     "build": "prisma generate && prisma migrate deploy && tsc --noEmit && vite build",
     "test": "vitest run",
     "test:watch": "vitest",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:seed": "tsx prisma/seed.ts",
+    "db:seed-demo": "tsx prisma/seed-demo.ts"
   },
   "repository": {
     "type": "git",
