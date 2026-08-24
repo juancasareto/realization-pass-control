@@ -88,7 +88,7 @@ export function AdminLayout() {
       <div className="px-4 py-4 border-b border-[color:rgb(255_255_255/0.06)]">
         <button
           onClick={() => { setPerfilOpen(true); setMobileOpen(false); }}
-          className="flex items-center gap-3 bg-[rgb(255_255_255/0.04)] hover:bg-[rgb(255_255_255/0.07)] p-3 w-full text-left transition-colors"
+          className="flex items-center gap-3 bg-[rgb(255_255_255/0.04)] hover:bg-[rgb(255_255_255/0.07)] p-3 w-full text-left transition-colors rounded-md"
         >
           <div className="w-9 h-9 rounded-full bg-[var(--gold)] text-[var(--ink)] flex items-center justify-center text-xs font-bold font-['JetBrains_Mono'] shrink-0">
             {initials}
@@ -106,7 +106,7 @@ export function AdminLayout() {
         <div ref={navRef} className="relative">
           <div
             ref={pillRef}
-            className="absolute left-0 right-0 bg-[rgb(255_255_255/0.06)] transition-all duration-200 ease-out pointer-events-none opacity-0"
+            className="absolute left-0 right-0 bg-[rgb(255_255_255/0.06)] transition-all duration-200 ease-out pointer-events-none opacity-0 rounded-md"
           />
           {NAV.map((item) => (
             <NavLink
@@ -175,7 +175,7 @@ export function AdminLayout() {
 
           <button
             onClick={() => setPerfilOpen(true)}
-            className="flex items-center gap-3 hover:bg-[rgb(255_255_255/0.04)] px-2 py-1 transition-colors min-w-0"
+            className="flex items-center gap-3 hover:bg-[rgb(255_255_255/0.04)] px-2 py-1 transition-colors min-w-0 rounded-md"
           >
             <div className="hidden sm:block text-right min-w-0">
               <p className="text-sm text-[var(--chalk)] truncate leading-tight">{nombre}</p>

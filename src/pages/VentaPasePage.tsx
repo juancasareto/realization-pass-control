@@ -45,25 +45,25 @@ export function VentaPasePage() {
     <form onSubmit={handleSubmit} className="max-w-md">
       <h2 className="font-['Anton'] uppercase text-2xl mb-6">Vender pase</h2>
       {error && <p className="text-[var(--crit)] text-sm mb-4">{error}</p>}
-      <select value={modalidadId} onChange={(e) => setModalidadId(e.target.value)} required className="w-full mb-3 bg-transparent border border-[var(--ink-line)] px-3 py-2">
+      <select value={modalidadId} onChange={(e) => setModalidadId(e.target.value)} required className="w-full mb-3 bg-transparent border border-[var(--ink-line)] px-3 py-2 rounded-md">
         <option value="">Elegí un plan</option>
         {modalidades.map((m) => <option key={m.id} value={m.id}>{m.nombre} — ${m.precio}</option>)}
       </select>
       {esClases && (
-        <select value={horarioId} onChange={(e) => setHorarioId(e.target.value)} required className="w-full mb-3 bg-transparent border border-[var(--ink-line)] px-3 py-2">
+        <select value={horarioId} onChange={(e) => setHorarioId(e.target.value)} required className="w-full mb-3 bg-transparent border border-[var(--ink-line)] px-3 py-2 rounded-md">
           <option value="">Elegí el horario fijo</option>
           {horarios.map((h) => <option key={h.id} value={h.id}>{DIAS[h.diaSemana]} {h.hora} — {h.tipoClase}</option>)}
         </select>
       )}
-      <select value={medio} onChange={(e) => setMedio(e.target.value)} className="w-full mb-3 bg-transparent border border-[var(--ink-line)] px-3 py-2">
+      <select value={medio} onChange={(e) => setMedio(e.target.value)} className="w-full mb-3 bg-transparent border border-[var(--ink-line)] px-3 py-2 rounded-md">
         <option value="EFECTIVO">Efectivo</option>
         <option value="TRANSFERENCIA">Transferencia</option>
         <option value="TARJETA">Tarjeta</option>
         <option value="MERCADOPAGO">Mercado Pago</option>
       </select>
       <input type="number" placeholder="Descuento %" value={descuento} onChange={(e) => setDescuento(Number(e.target.value))}
-        className="w-full mb-4 bg-transparent border border-[var(--ink-line)] px-3 py-2" />
-      <button type="submit" className="w-full bg-[var(--gold)] text-[var(--ink)] font-bold py-3">Registrar venta</button>
+        className="w-full mb-4 bg-transparent border border-[var(--ink-line)] px-3 py-2 rounded-md" />
+      <button type="submit" className="w-full bg-[var(--gold)] text-[var(--ink)] font-bold py-3 rounded-md">Registrar venta</button>
     </form>
   );
 }

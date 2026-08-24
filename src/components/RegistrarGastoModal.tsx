@@ -51,8 +51,8 @@ export function RegistrarGastoModal({ open, onClose, onSaved }: Props) {
       subtitle="Toda salida de caja (sueldos, alquiler, insumos, retiros de socios, etc.)."
       footer={
         <div className="flex gap-3">
-          <button type="button" onClick={handleClose} className="flex-1 py-2.5 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] hover:border-[var(--rock)] text-sm uppercase tracking-wide transition-colors">Cancelar</button>
-          <button type="submit" form="gasto-form" disabled={saving} className="flex-1 py-2.5 bg-[var(--crit)] text-white text-sm uppercase tracking-wide font-bold hover:brightness-110 transition-all disabled:opacity-50">{saving ? 'Guardando…' : 'Registrar gasto'}</button>
+          <button type="button" onClick={handleClose} className="flex-1 py-2.5 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] hover:border-[var(--rock)] text-sm uppercase tracking-wide transition-colors rounded-md">Cancelar</button>
+          <button type="submit" form="gasto-form" disabled={saving} className="flex-1 py-2.5 bg-[var(--crit)] text-white text-sm uppercase tracking-wide font-bold hover:brightness-110 transition-all disabled:opacity-50 rounded-md">{saving ? 'Guardando…' : 'Registrar gasto'}</button>
         </div>
       }
     >
@@ -87,7 +87,7 @@ export function RegistrarGastoModal({ open, onClose, onSaved }: Props) {
   );
 }
 
-const inputClass = 'w-full bg-[var(--ink)] border border-[var(--ink-line)] px-3 py-2.5 text-sm text-[var(--chalk)] placeholder:text-[var(--rock-dim)] outline-none focus:border-[var(--gold)] transition-colors';
+const inputClass = 'w-full bg-[var(--ink)] border border-[var(--ink-line)] px-3 py-2.5 text-sm text-[var(--chalk)] placeholder:text-[var(--rock-dim)] outline-none focus:border-[var(--gold)] transition-colors rounded-md';
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (

@@ -5,7 +5,7 @@ import { AuthProvider } from '../../src/lib/AuthContext';
 import { LoginPage } from '../../src/pages/LoginPage';
 
 describe('App', () => {
-  it('renders Realization in the shell', () => {
+  it('renders the Realization logo in the shell', () => {
     render(
       <AuthProvider>
         <MemoryRouter initialEntries={['/login']}>
@@ -13,6 +13,6 @@ describe('App', () => {
         </MemoryRouter>
       </AuthProvider>
     );
-    expect(screen.getByText(/Realization/i)).toBeInTheDocument();
+    expect(screen.getByAltText(/Realization/i)).toBeInTheDocument();
   });
 });

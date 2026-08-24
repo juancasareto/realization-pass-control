@@ -79,7 +79,7 @@ export function ReservasHoyList({ refreshKey, onSaved }: { refreshKey?: number; 
   }
 
   return (
-    <div className="border border-[var(--ink-line)]">
+    <div className="border border-[var(--ink-line)] rounded-md overflow-hidden">
       <div className="flex items-center justify-between p-4 border-b border-[var(--ink-line)]">
         <p className="text-xs uppercase text-[var(--rock)]">Reservas de hoy</p>
         {loading && <span className="text-[10px] text-[var(--rock-dim)] uppercase">Cargando…</span>}
@@ -104,7 +104,7 @@ export function ReservasHoyList({ refreshKey, onSaved }: { refreshKey?: number; 
                     {r.estadoAsistencia === 'PENDIENTE' ? (
                       <button
                         onClick={() => abrirConfirmacion(r)}
-                        className="px-3 py-1.5 border border-[var(--good)] text-[var(--good)] text-xs uppercase tracking-wide hover:bg-[rgb(79_174_109/0.1)] transition-colors"
+                        className="px-3 py-1.5 border border-[var(--good)] text-[var(--good)] text-xs uppercase tracking-wide hover:bg-[rgb(79_174_109/0.1)] transition-colors rounded-md"
                       >
                         Registrar
                       </button>
@@ -124,13 +124,13 @@ export function ReservasHoyList({ refreshKey, onSaved }: { refreshKey?: number; 
           className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4"
           onMouseDown={(e) => { if (e.target === e.currentTarget) setConfirmando(null); }}
         >
-          <div className="bg-[var(--ink-raised)] border border-[var(--ink-line)] w-full max-w-sm p-5 shadow-xl">
+          <div className="bg-[var(--ink-raised)] border border-[var(--ink-line)] w-full max-w-sm p-5 shadow-xl rounded-md">
             <h3 className="font-['Anton'] uppercase text-lg tracking-wide text-[var(--chalk)] mb-3">Registrar asistencia</h3>
             <div className="space-y-2 text-sm mb-5">
               <p className="text-[var(--chalk)]">{confirmando.clienteNombre}</p>
               <p className="text-[var(--rock)]">{confirmando.tipoClase} — {new Date(confirmando.fechaHora).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })}</p>
               {infoAlumno ? (
-                <div className="border border-[var(--ink-line)] bg-[var(--ink)] p-3 space-y-1">
+                <div className="border border-[var(--ink-line)] bg-[var(--ink)] p-3 space-y-1 rounded-md">
                   <p className="text-xs text-[var(--rock)]">
                     Clases pendientes: <span className="font-bold text-[var(--gold)]">{Math.max(0, infoAlumno.ticketsDisponibles - 1)}</span> tras esta
                   </p>
@@ -145,8 +145,8 @@ export function ReservasHoyList({ refreshKey, onSaved }: { refreshKey?: number; 
               )}
             </div>
             <div className="flex gap-3">
-              <button onClick={() => setConfirmando(null)} className="flex-1 py-2 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] text-sm uppercase tracking-wide transition-colors">Cancelar</button>
-              <button onClick={confirmarPresente} disabled={marcando} className="flex-1 py-2 bg-[var(--good)] text-white text-sm uppercase tracking-wide font-bold hover:brightness-110 transition-all disabled:opacity-50">{marcando ? '…' : 'Confirmar'}</button>
+              <button onClick={() => setConfirmando(null)} className="flex-1 py-2 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] text-sm uppercase tracking-wide transition-colors rounded-md">Cancelar</button>
+              <button onClick={confirmarPresente} disabled={marcando} className="flex-1 py-2 bg-[var(--good)] text-white text-sm uppercase tracking-wide font-bold hover:brightness-110 transition-all disabled:opacity-50 rounded-md">{marcando ? '…' : 'Confirmar'}</button>
             </div>
           </div>
         </div>

@@ -32,13 +32,13 @@ export function CalendarioPage() {
         no cancela nada solo, decidís vos si tocás el horario ese día.
       </p>
       <form onSubmit={handleSubmit} className="flex gap-3 mb-6 flex-wrap">
-        <input type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required className="bg-transparent border border-[var(--ink-line)] px-3 py-2 text-sm" />
-        <select value={tipo} onChange={(e) => setTipo(e.target.value as 'SETEO' | 'FERIADO')} className="bg-[var(--ink)] border border-[var(--ink-line)] px-3 py-2 text-sm">
+        <input type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required className="bg-transparent border border-[var(--ink-line)] px-3 py-2 text-sm rounded-md" />
+        <select value={tipo} onChange={(e) => setTipo(e.target.value as 'SETEO' | 'FERIADO')} className="bg-[var(--ink)] border border-[var(--ink-line)] px-3 py-2 text-sm rounded-md">
           <option value="SETEO">Día de seteo (cierra todo)</option>
           <option value="FERIADO">Feriado (aviso)</option>
         </select>
-        <input placeholder="Nota (opcional)" value={nota} onChange={(e) => setNota(e.target.value)} className="flex-1 bg-transparent border border-[var(--ink-line)] px-3 py-2 text-sm" />
-        <button type="submit" className="bg-[var(--gold)] text-[var(--ink)] font-bold px-4 py-2 text-sm">Agregar</button>
+        <input placeholder="Nota (opcional)" value={nota} onChange={(e) => setNota(e.target.value)} className="flex-1 bg-transparent border border-[var(--ink-line)] px-3 py-2 text-sm rounded-md" />
+        <button type="submit" className="bg-[var(--gold)] text-[var(--ink)] font-bold px-4 py-2 text-sm rounded-md">Agregar</button>
       </form>
       <ul>
         {dias.map((d) => (

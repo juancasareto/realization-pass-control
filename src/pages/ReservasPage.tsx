@@ -156,16 +156,16 @@ export function ReservasPage() {
       <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
         <h2 className="font-['Anton'] uppercase text-2xl">Reservas</h2>
         <div className="flex items-center gap-2">
-          <button onClick={() => moverSemana(-7)} className="p-2 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] hover:border-[var(--rock)] transition-colors" title="Semana anterior">
+          <button onClick={() => moverSemana(-7)} className="p-2 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] hover:border-[var(--rock)] transition-colors rounded-md" title="Semana anterior">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="square" d="M15 19l-7-7 7-7" /></svg>
           </button>
-          <div className="px-3 py-2 border border-[var(--ink-line)] text-sm text-[var(--chalk)] font-mono tabular-nums min-w-[160px] text-center capitalize">
+          <div className="px-3 py-2 border border-[var(--ink-line)] text-sm text-[var(--chalk)] font-mono tabular-nums min-w-[160px] text-center capitalize rounded-md">
             {fmtRango(inicioSemana, finSemana)}
           </div>
-          <button onClick={() => moverSemana(7)} className="p-2 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] hover:border-[var(--rock)] transition-colors" title="Semana siguiente">
+          <button onClick={() => moverSemana(7)} className="p-2 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] hover:border-[var(--rock)] transition-colors rounded-md" title="Semana siguiente">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="square" d="M9 5l7 7-7 7" /></svg>
           </button>
-          <button onClick={() => setInicioSemana(inicioSemanaLunes(new Date()))} className="px-3 py-2 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] hover:border-[var(--rock)] text-xs uppercase tracking-wide transition-colors">
+          <button onClick={() => setInicioSemana(inicioSemanaLunes(new Date()))} className="px-3 py-2 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] hover:border-[var(--rock)] text-xs uppercase tracking-wide transition-colors rounded-md">
             Hoy
           </button>
         </div>
@@ -173,11 +173,11 @@ export function ReservasPage() {
 
       {/* Filtros */}
       <div className="flex gap-2 mb-4 flex-wrap">
-        <select value={filtroTipo} onChange={(e) => setFiltroTipo(e.target.value)} className="bg-[var(--ink)] border border-[var(--ink-line)] px-3 py-2 text-sm outline-none focus:border-[var(--gold)] transition-colors">
+        <select value={filtroTipo} onChange={(e) => setFiltroTipo(e.target.value)} className="bg-[var(--ink)] border border-[var(--ink-line)] px-3 py-2 text-sm outline-none focus:border-[var(--gold)] transition-colors rounded-md">
           <option value="">Todos los tipos</option>
           {tiposClase.map((t) => <option key={t} value={t}>{t}</option>)}
         </select>
-        <select value={filtroProfesorId} onChange={(e) => setFiltroProfesorId(e.target.value)} className="bg-[var(--ink)] border border-[var(--ink-line)] px-3 py-2 text-sm outline-none focus:border-[var(--gold)] transition-colors">
+        <select value={filtroProfesorId} onChange={(e) => setFiltroProfesorId(e.target.value)} className="bg-[var(--ink)] border border-[var(--ink-line)] px-3 py-2 text-sm outline-none focus:border-[var(--gold)] transition-colors rounded-md">
           <option value="">Todos los profesores</option>
           {profesores.map((p) => <option key={p.id} value={p.id}>{p.nombre}</option>)}
         </select>
@@ -241,7 +241,7 @@ export function ReservasPage() {
 function LegendItem({ color, label }: { color: string; label: string }) {
   return (
     <span className="flex items-center gap-1">
-      <span className="w-3 h-3 border" style={{ borderColor: color, background: color + '20' }} />
+      <span className="w-3 h-3 border rounded-sm" style={{ borderColor: color, background: color + '20' }} />
       {label}
     </span>
   );
@@ -283,17 +283,17 @@ function PanelCelda({
           {celda.reservas.length === 0 && <p className="text-sm text-[var(--rock-dim)]">Sin alumnos anotados.</p>}
           <ul className="space-y-2">
             {celda.reservas.map((r) => (
-              <li key={r.id} className="border border-[var(--ink-line)] bg-[var(--ink)] p-3">
+              <li key={r.id} className="border border-[var(--ink-line)] bg-[var(--ink)] p-3 rounded-md">
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <p className="text-sm text-[var(--chalk)]">{r.clienteNombre}</p>
                   <AsistenciaBadge estado={r.estadoAsistencia} />
                 </div>
                 {r.estadoAsistencia === 'PENDIENTE' && (
                   <div className="flex flex-wrap gap-1 mt-2">
-                    <button onClick={() => onMarcar(r.id, 'PRESENTE')} className="px-2 py-1 border border-[var(--good)] text-[var(--good)] text-[10px] uppercase tracking-wide hover:bg-[rgb(79_174_109/0.1)] transition-colors">Presente</button>
-                    <button onClick={() => onMarcar(r.id, 'AVISO_AUSENCIA')} className="px-2 py-1 border border-[var(--warn)] text-[var(--warn)] text-[10px] uppercase tracking-wide hover:bg-[rgb(217_123_41/0.1)] transition-colors">Aviso</button>
-                    <button onClick={() => onMarcar(r.id, 'PENALIZADA')} className="px-2 py-1 border border-[var(--crit)] text-[var(--crit)] text-[10px] uppercase tracking-wide hover:bg-[rgb(225_80_61/0.1)] transition-colors">No vino</button>
-                    <button onClick={() => onCancelar(r.id)} className="px-2 py-1 border border-[var(--ink-line)] text-[var(--rock)] text-[10px] uppercase tracking-wide hover:text-[var(--chalk)] transition-colors ml-auto">Cancelar</button>
+                    <button onClick={() => onMarcar(r.id, 'PRESENTE')} className="px-2 py-1 border border-[var(--good)] text-[var(--good)] text-[10px] uppercase tracking-wide hover:bg-[rgb(79_174_109/0.1)] transition-colors rounded-md">Presente</button>
+                    <button onClick={() => onMarcar(r.id, 'AVISO_AUSENCIA')} className="px-2 py-1 border border-[var(--warn)] text-[var(--warn)] text-[10px] uppercase tracking-wide hover:bg-[rgb(217_123_41/0.1)] transition-colors rounded-md">Aviso</button>
+                    <button onClick={() => onMarcar(r.id, 'PENALIZADA')} className="px-2 py-1 border border-[var(--crit)] text-[var(--crit)] text-[10px] uppercase tracking-wide hover:bg-[rgb(225_80_61/0.1)] transition-colors rounded-md">No vino</button>
+                    <button onClick={() => onCancelar(r.id)} className="px-2 py-1 border border-[var(--ink-line)] text-[var(--rock)] text-[10px] uppercase tracking-wide hover:text-[var(--chalk)] transition-colors ml-auto rounded-md">Cancelar</button>
                   </div>
                 )}
               </li>
@@ -305,7 +305,7 @@ function PanelCelda({
           <footer className="p-5 border-t border-[var(--ink-line)] shrink-0">
             <button
               onClick={onNoVinoMasivo}
-              className="w-full py-2.5 border border-[var(--crit)] text-[var(--crit)] text-xs uppercase tracking-wide font-bold hover:bg-[rgb(225_80_61/0.1)] transition-colors"
+              className="w-full py-2.5 border border-[var(--crit)] text-[var(--crit)] text-xs uppercase tracking-wide font-bold hover:bg-[rgb(225_80_61/0.1)] transition-colors rounded-md"
             >
               Marcar {pendientes} pendientes como "no vino"
             </button>

@@ -57,7 +57,7 @@ export function ComboboxAlumno({ value, onChange, placeholder = 'Buscar alumnoâ€
 
   return (
     <div ref={containerRef} className="relative">
-      <div className="flex items-center border border-[var(--ink-line)] bg-[var(--ink)] focus-within:border-[var(--gold)] transition-colors">
+      <div className="flex items-center border border-[var(--ink-line)] bg-[var(--ink)] focus-within:border-[var(--gold)] transition-colors rounded-md">
         <input
           ref={inputRef}
           type="text"
@@ -92,7 +92,7 @@ export function ComboboxAlumno({ value, onChange, placeholder = 'Buscar alumnoâ€
       </div>
 
       {open && (
-        <div className="absolute z-10 left-0 right-0 mt-1 bg-[var(--ink-raised)] border border-[var(--ink-line)] max-h-52 overflow-y-auto shadow-xl">
+        <div className="absolute z-10 left-0 right-0 mt-1 bg-[var(--ink-raised)] border border-[var(--ink-line)] max-h-52 overflow-y-auto shadow-xl rounded-md">
           {loading && <div className="px-3 py-2.5 text-sm text-[var(--rock-dim)]">Cargandoâ€¦</div>}
           {!loading && filtered.length === 0 && (
             <div className="px-3 py-2.5 text-sm text-[var(--rock-dim)]">Sin resultados.</div>

@@ -85,8 +85,8 @@ export function AvisoAusenciaModal({ open, onClose, onSaved }: Props) {
       size="lg"
       footer={
         <div className="flex gap-3">
-          <button type="button" onClick={handleClose} className="flex-1 py-2.5 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] hover:border-[var(--rock)] text-sm uppercase tracking-wide transition-colors">Cancelar</button>
-          <button type="submit" form="aviso-form" disabled={saving || !alumno || !reserva} className="flex-1 py-2.5 bg-[var(--warn)] text-white text-sm uppercase tracking-wide font-bold hover:brightness-110 transition-all disabled:opacity-50">{saving ? 'Guardando…' : 'Registrar aviso'}</button>
+          <button type="button" onClick={handleClose} className="flex-1 py-2.5 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] hover:border-[var(--rock)] text-sm uppercase tracking-wide transition-colors rounded-md">Cancelar</button>
+          <button type="submit" form="aviso-form" disabled={saving || !alumno || !reserva} className="flex-1 py-2.5 bg-[var(--warn)] text-white text-sm uppercase tracking-wide font-bold hover:brightness-110 transition-all disabled:opacity-50 rounded-md">{saving ? 'Guardando…' : 'Registrar aviso'}</button>
         </div>
       }
     >
@@ -96,7 +96,7 @@ export function AvisoAusenciaModal({ open, onClose, onSaved }: Props) {
         </Field>
 
         {alumno && (
-          <div className="border border-[var(--ink-line)] bg-[var(--ink)] p-3 text-sm">
+          <div className="border border-[var(--ink-line)] bg-[var(--ink)] p-3 text-sm rounded-md">
             {buscando && <p className="text-[var(--rock)]">Buscando próxima clase…</p>}
             {!buscando && reserva && (
               <div>

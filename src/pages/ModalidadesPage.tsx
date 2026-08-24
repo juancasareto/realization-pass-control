@@ -67,7 +67,7 @@ export function ModalidadesPage() {
           </label>
           <button
             onClick={abrirNuevo}
-            className="flex items-center gap-2 px-4 py-2 bg-[var(--gold)] text-[var(--ink)] text-xs uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-[var(--gold)] text-[var(--ink)] text-xs uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors rounded-md"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="square" d="M12 4v16m8-8H4" />
@@ -80,7 +80,7 @@ export function ModalidadesPage() {
       {loading && planes.length === 0 && <p className="text-sm text-[var(--rock-dim)]">Cargando…</p>}
 
       {!loading && visibles.length === 0 && (
-        <div className="border border-[var(--ink-line)] p-8 text-center">
+        <div className="border border-[var(--ink-line)] p-8 text-center rounded-md">
           <p className="text-[var(--rock)] mb-3">No hay planes cargados todavía.</p>
           <button onClick={abrirNuevo} className="text-[var(--gold)] text-sm uppercase tracking-wide hover:underline">
             Crear el primero
@@ -95,14 +95,14 @@ export function ModalidadesPage() {
             return (
               <div
                 key={p.id}
-                className={`border p-5 flex flex-col gap-4 ${p.activo ? 'border-[var(--ink-line)] bg-[var(--ink-raised)]' : 'border-[var(--ink-line)] bg-[var(--ink-raised)] opacity-50'}`}
+                className={`border p-5 flex flex-col gap-4 rounded-md ${p.activo ? 'border-[var(--ink-line)] bg-[var(--ink-raised)]' : 'border-[var(--ink-line)] bg-[var(--ink-raised)] opacity-50'}`}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
                     <p className="text-sm uppercase tracking-wide text-[var(--gold)]">{p.tipo === 'CLASES' ? 'Clases' : 'Libre'}</p>
                     <h3 className="text-lg font-bold text-[var(--chalk)] mt-1 leading-tight">{p.nombre}</h3>
                   </div>
-                  {!p.activo && <span className="text-[10px] uppercase tracking-[0.15em] text-[var(--rock-dim)] border border-[var(--ink-line)] px-2 py-0.5">Inactivo</span>}
+                  {!p.activo && <span className="text-[10px] uppercase tracking-[0.15em] text-[var(--rock-dim)] border border-[var(--ink-line)] px-2 py-0.5 rounded-md">Inactivo</span>}
                 </div>
 
                 <div>

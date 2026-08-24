@@ -21,13 +21,13 @@ export function MiPerfilModal({ open, onClose }: { open: boolean; onClose: () =>
         <div className="flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 py-2.5 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] hover:border-[var(--rock)] text-sm uppercase tracking-wide transition-colors"
+            className="flex-1 py-2.5 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] hover:border-[var(--rock)] text-sm uppercase tracking-wide transition-colors rounded-md"
           >
             Cerrar
           </button>
           <button
             onClick={() => { onClose(); logout(); }}
-            className="flex-1 py-2.5 bg-[var(--crit)] text-white text-sm uppercase tracking-wide font-medium hover:brightness-110 transition-all"
+            className="flex-1 py-2.5 bg-[var(--crit)] text-white text-sm uppercase tracking-wide font-medium hover:brightness-110 transition-all rounded-md"
           >
             Cerrar sesión
           </button>

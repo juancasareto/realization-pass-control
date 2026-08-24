@@ -6,5 +6,5 @@ const COLORS: Record<string, string> = {
 };
 
 export function EstadoBadge({ estado }: { estado: string }) {
-  return <span className={`font-mono text-xs uppercase px-2 py-1 ${COLORS[estado]}`}>{LABELS[estado]}</span>;
+  return <span className={`font-mono text-xs uppercase px-2 py-1 rounded-md ${COLORS[estado]}`}>{LABELS[estado]}</span>;
 }

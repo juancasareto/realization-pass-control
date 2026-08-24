@@ -37,7 +37,7 @@ export function ClientesPage() {
         <h2 className="font-['Anton'] uppercase text-2xl">Alumnos</h2>
         <button
           onClick={() => setNuevoOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-[var(--gold)] text-[var(--ink)] text-xs uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-[var(--gold)] text-[var(--ink)] text-xs uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors rounded-md"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="square" d="M12 4v16m8-8H4" />
@@ -51,12 +51,12 @@ export function ClientesPage() {
           placeholder="Buscar por nombre o email"
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          className="flex-1 bg-[var(--ink)] border border-[var(--ink-line)] px-3 py-2 text-sm outline-none focus:border-[var(--gold)] transition-colors"
+          className="flex-1 bg-[var(--ink)] border border-[var(--ink-line)] px-3 py-2 text-sm outline-none focus:border-[var(--gold)] transition-colors rounded-md"
         />
         <select
           value={estado}
           onChange={(e) => setEstado(e.target.value)}
-          className="bg-[var(--ink)] border border-[var(--ink-line)] px-3 py-2 text-sm outline-none focus:border-[var(--gold)] transition-colors"
+          className="bg-[var(--ink)] border border-[var(--ink-line)] px-3 py-2 text-sm outline-none focus:border-[var(--gold)] transition-colors rounded-md"
         >
           <option value="">Todos los estados</option>
           <option value="activo">Activo</option>
@@ -65,7 +65,7 @@ export function ClientesPage() {
         </select>
       </div>
 
-      <div className="border border-[var(--ink-line)]">
+      <div className="border border-[var(--ink-line)] rounded-md overflow-hidden">
         {loading && clientes.length === 0 && <p className="p-4 text-sm text-[var(--rock-dim)]">Cargando…</p>}
         {!loading && clientes.length === 0 && <p className="p-4 text-sm text-[var(--rock-dim)]">Sin alumnos que coincidan con la búsqueda.</p>}
         {clientes.length > 0 && (

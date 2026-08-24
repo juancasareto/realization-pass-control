@@ -116,8 +116,8 @@ export function HorarioModal({ open, onClose, onSaved, editing }: Props) {
       size="lg"
       footer={
         <div className="flex gap-3">
-          <button type="button" onClick={onClose} className="flex-1 py-2.5 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] hover:border-[var(--rock)] text-sm uppercase tracking-wide transition-colors">Cancelar</button>
-          <button type="submit" form="horario-form" disabled={saving} className="flex-1 py-2.5 bg-[var(--gold)] text-[var(--ink)] text-sm uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors disabled:opacity-50">{saving ? 'Guardando…' : isEdit ? 'Guardar cambios' : `Crear ${dias.size > 1 ? `${dias.size} horarios` : 'horario'}`}</button>
+          <button type="button" onClick={onClose} className="flex-1 py-2.5 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] hover:border-[var(--rock)] text-sm uppercase tracking-wide transition-colors rounded-md">Cancelar</button>
+          <button type="submit" form="horario-form" disabled={saving} className="flex-1 py-2.5 bg-[var(--gold)] text-[var(--ink)] text-sm uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors disabled:opacity-50 rounded-md">{saving ? 'Guardando…' : isEdit ? 'Guardar cambios' : `Crear ${dias.size > 1 ? `${dias.size} horarios` : 'horario'}`}</button>
         </div>
       }
     >
@@ -184,7 +184,7 @@ export function HorarioModal({ open, onClose, onSaved, editing }: Props) {
   );
 }
 
-const inputClass = 'w-full bg-[var(--ink)] border border-[var(--ink-line)] px-3 py-2.5 text-sm text-[var(--chalk)] placeholder:text-[var(--rock-dim)] outline-none focus:border-[var(--gold)] transition-colors';
+const inputClass = 'w-full bg-[var(--ink)] border border-[var(--ink-line)] px-3 py-2.5 text-sm text-[var(--chalk)] placeholder:text-[var(--rock-dim)] outline-none focus:border-[var(--gold)] transition-colors rounded-md';
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (

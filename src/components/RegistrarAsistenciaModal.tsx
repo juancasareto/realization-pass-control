@@ -71,8 +71,8 @@ export function RegistrarAsistenciaModal({ open, onClose, onSaved }: Props) {
       subtitle="Marca al alumno como presente. Si tiene reserva se usa; si no, se consume 1 ticket libre."
       footer={
         <div className="flex gap-3">
-          <button type="button" onClick={handleClose} className="flex-1 py-2.5 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] hover:border-[var(--rock)] text-sm uppercase tracking-wide transition-colors">Cancelar</button>
-          <button type="submit" form="asistencia-form" disabled={saving || !alumno} className="flex-1 py-2.5 bg-[var(--good)] text-white text-sm uppercase tracking-wide font-bold hover:brightness-110 transition-all disabled:opacity-50">{saving ? 'Guardando…' : 'Registrar asistencia'}</button>
+          <button type="button" onClick={handleClose} className="flex-1 py-2.5 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] hover:border-[var(--rock)] text-sm uppercase tracking-wide transition-colors rounded-md">Cancelar</button>
+          <button type="submit" form="asistencia-form" disabled={saving || !alumno} className="flex-1 py-2.5 bg-[var(--good)] text-white text-sm uppercase tracking-wide font-bold hover:brightness-110 transition-all disabled:opacity-50 rounded-md">{saving ? 'Guardando…' : 'Registrar asistencia'}</button>
         </div>
       }
     >
@@ -82,7 +82,7 @@ export function RegistrarAsistenciaModal({ open, onClose, onSaved }: Props) {
         </Field>
 
         {alumno && (
-          <div className="border border-[var(--ink-line)] bg-[var(--ink)] p-3 text-sm">
+          <div className="border border-[var(--ink-line)] bg-[var(--ink)] p-3 text-sm rounded-md">
             <p className="text-[var(--rock)]">{ticketsInfo}</p>
             {reservaHoy ? (
               <p className="text-[var(--good)] mt-1">✓ Tiene reserva hoy — {reservaHoy.tipoClase} a las {new Date(reservaHoy.fechaHora).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })}</p>

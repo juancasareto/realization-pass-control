@@ -76,7 +76,7 @@ export function HorariosPage() {
           </label>
           <button
             onClick={abrirNuevo}
-            className="flex items-center gap-2 px-4 py-2 bg-[var(--gold)] text-[var(--ink)] text-xs uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-[var(--gold)] text-[var(--ink)] text-xs uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors rounded-md"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="square" d="M12 4v16m8-8H4" />
@@ -89,7 +89,7 @@ export function HorariosPage() {
       {loading && horarios.length === 0 && <p className="text-sm text-[var(--rock-dim)]">Cargando…</p>}
 
       {!loading && visibles.length === 0 && (
-        <div className="border border-[var(--ink-line)] p-8 text-center">
+        <div className="border border-[var(--ink-line)] p-8 text-center rounded-md">
           <p className="text-[var(--rock)] mb-3">No hay horarios cargados todavía.</p>
           <button onClick={abrirNuevo} className="text-[var(--gold)] text-sm uppercase tracking-wide hover:underline">
             Crear el primero
@@ -103,7 +103,7 @@ export function HorariosPage() {
             const items = porDia.get(dia) ?? [];
             if (items.length === 0) return null;
             return (
-              <div key={dia} className="border border-[var(--ink-line)]">
+              <div key={dia} className="border border-[var(--ink-line)] rounded-md overflow-hidden">
                 <div className="px-4 py-3 border-b border-[var(--ink-line)] bg-[var(--ink-raised)]">
                   <p className="font-['Anton'] uppercase text-sm tracking-wide text-[var(--gold)]">{DIAS_FULL[dia - 1]}</p>
                 </div>

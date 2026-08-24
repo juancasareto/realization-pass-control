@@ -40,15 +40,15 @@ export function FichaClientePage() {
       <p className="font-mono tabular-nums text-3xl mb-4">{data.cliente.ticketsDisponibles} tickets</p>
 
       <div className="grid grid-cols-3 gap-3 mb-8 text-sm">
-        <div className="border border-[var(--ink-line)] p-3">
+        <div className="border border-[var(--ink-line)] p-3 rounded-md">
           <p className="text-xs uppercase text-[var(--rock-dim)] mb-1">Cliente desde</p>
           <p>{new Date(data.cliente.clienteDesde).toLocaleDateString('es-AR')}</p>
         </div>
-        <div className="border border-[var(--ink-line)] p-3">
+        <div className="border border-[var(--ink-line)] p-3 rounded-md">
           <p className="text-xs uppercase text-[var(--rock-dim)] mb-1">Ausencias sin aviso</p>
           <p className="font-mono tabular-nums">{data.cliente.ausenciasSinAviso}</p>
         </div>
-        <div className="border border-[var(--ink-line)] p-3">
+        <div className="border border-[var(--ink-line)] p-3 rounded-md">
           <p className="text-xs uppercase text-[var(--rock-dim)] mb-1">Última visita</p>
           <p>{data.cliente.ultimaVisita ? new Date(data.cliente.ultimaVisita).toLocaleDateString('es-AR') : 'Nunca'}</p>
         </div>

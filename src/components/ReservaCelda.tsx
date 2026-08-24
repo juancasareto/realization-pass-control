@@ -33,7 +33,7 @@ export function ReservaCelda({ celda, onClick }: { celda: Celda; onClick: () => 
   return (
     <button
       onClick={onClick}
-      className="w-full text-left p-2 border transition-all hover:brightness-125"
+      className="w-full text-left p-2 border transition-all hover:brightness-125 rounded-md"
       style={{ borderColor: c.border, background: c.bg }}
     >
       <p className="font-mono tabular-nums text-[11px] text-[var(--rock)]">{celda.hora}</p>

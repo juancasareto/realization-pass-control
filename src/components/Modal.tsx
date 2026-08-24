@@ -31,7 +31,7 @@ export function Modal({ open, onClose, title, subtitle, size = 'md', children, f
       className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4"
       onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className={`bg-[var(--ink-raised)] border border-[var(--ink-line)] w-full ${maxWidth} max-h-[90vh] flex flex-col shadow-xl`}>
+      <div className={`bg-[var(--ink-raised)] border border-[var(--ink-line)] w-full ${maxWidth} max-h-[90vh] flex flex-col shadow-xl rounded-md overflow-hidden`}>
         <header className="flex items-start justify-between p-5 border-b border-[var(--ink-line)] shrink-0">
           <div>
             <h2 className="font-['Anton'] uppercase text-lg tracking-wide text-[var(--chalk)]">{title}</h2>

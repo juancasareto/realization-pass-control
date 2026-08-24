@@ -116,13 +116,13 @@ export function FichaAlumnoModal({ clienteId, open, onClose, onUpdated }: Props)
       footer={
         !cliente ? null : modo === 'view' ? (
           <div className="flex gap-3">
-            <button onClick={onClose} className="flex-1 py-2.5 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] text-sm uppercase tracking-wide transition-colors">Cerrar</button>
-            <button onClick={entrarEdicion} className="flex-1 py-2.5 bg-[var(--gold)] text-[var(--ink)] text-sm uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors">Editar</button>
+            <button onClick={onClose} className="flex-1 py-2.5 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] text-sm uppercase tracking-wide transition-colors rounded-md">Cerrar</button>
+            <button onClick={entrarEdicion} className="flex-1 py-2.5 bg-[var(--gold)] text-[var(--ink)] text-sm uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors rounded-md">Editar</button>
           </div>
         ) : (
           <div className="flex gap-3">
-            <button onClick={() => setModo('view')} className="flex-1 py-2.5 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] text-sm uppercase tracking-wide transition-colors">Cancelar</button>
-            <button type="submit" form="editar-alumno-form" disabled={saving} className="flex-1 py-2.5 bg-[var(--gold)] text-[var(--ink)] text-sm uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors disabled:opacity-50">{saving ? 'Guardando…' : 'Guardar'}</button>
+            <button onClick={() => setModo('view')} className="flex-1 py-2.5 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] text-sm uppercase tracking-wide transition-colors rounded-md">Cancelar</button>
+            <button type="submit" form="editar-alumno-form" disabled={saving} className="flex-1 py-2.5 bg-[var(--gold)] text-[var(--ink)] text-sm uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors rounded-md disabled:opacity-50">{saving ? 'Guardando…' : 'Guardar'}</button>
           </div>
         )
       }
@@ -223,11 +223,11 @@ export function FichaAlumnoModal({ clienteId, open, onClose, onUpdated }: Props)
   );
 }
 
-const inputClass = 'w-full bg-[var(--ink)] border border-[var(--ink-line)] px-3 py-2.5 text-sm text-[var(--chalk)] placeholder:text-[var(--rock-dim)] outline-none focus:border-[var(--gold)] transition-colors';
+const inputClass = 'w-full bg-[var(--ink)] border border-[var(--ink-line)] px-3 py-2.5 text-sm text-[var(--chalk)] placeholder:text-[var(--rock-dim)] outline-none focus:border-[var(--gold)] transition-colors rounded-md';
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="border border-[var(--ink-line)] bg-[var(--ink)] p-3">
+    <div className="border border-[var(--ink-line)] bg-[var(--ink)] p-3 rounded-md">
       <p className="font-mono tabular-nums text-2xl text-[var(--chalk)]">{value}</p>
       <p className="text-[10px] uppercase tracking-[0.15em] text-[var(--rock)] mt-1">{label}</p>
     </div>
