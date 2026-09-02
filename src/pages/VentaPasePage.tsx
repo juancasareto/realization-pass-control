@@ -63,7 +63,7 @@ export function VentaPasePage() {
       </select>
       <input type="number" placeholder="Descuento %" value={descuento} onChange={(e) => setDescuento(Number(e.target.value))}
         className="w-full mb-4 bg-transparent border border-[var(--ink-line)] px-3 py-2 rounded-md" />
-      <button type="submit" className="w-full bg-[var(--gold)] text-[var(--ink)] font-bold py-3 rounded-md">Registrar venta</button>
+      <button type="submit" className="w-full bg-[var(--gold)] text-[var(--on-accent)] font-bold py-3 rounded-md">Registrar venta</button>
     </form>
   );
 }

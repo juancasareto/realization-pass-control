@@ -67,7 +67,7 @@ export function ModalidadesPage() {
           </label>
           <button
             onClick={abrirNuevo}
-            className="flex items-center gap-2 px-4 py-2 bg-[var(--gold)] text-[var(--ink)] text-xs uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors rounded-md"
+            className="flex items-center gap-2 px-4 py-2 bg-[var(--gold)] text-[var(--on-accent)] text-xs uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors rounded-md"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="square" d="M12 4v16m8-8H4" />

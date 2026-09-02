@@ -35,7 +35,7 @@ export function MiPerfilModal({ open, onClose }: { open: boolean; onClose: () =>
       }
     >
       <div className="flex items-center gap-4 pb-4 border-b border-[var(--ink-line)]">
-        <div className="w-14 h-14 rounded-full bg-[var(--gold)] text-[var(--ink)] flex items-center justify-center text-lg font-bold font-['JetBrains_Mono'] shrink-0">
+        <div className="w-14 h-14 rounded-full bg-[var(--gold)] text-[var(--on-accent)] flex items-center justify-center text-lg font-bold font-['JetBrains_Mono'] shrink-0">
           {initials}
         </div>
         <div className="min-w-0">

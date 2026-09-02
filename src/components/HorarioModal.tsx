@@ -117,7 +117,7 @@ export function HorarioModal({ open, onClose, onSaved, editing }: Props) {
       footer={
         <div className="flex gap-3">
           <button type="button" onClick={onClose} className="flex-1 py-2.5 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] hover:border-[var(--rock)] text-sm uppercase tracking-wide transition-colors rounded-md">Cancelar</button>
-          <button type="submit" form="horario-form" disabled={saving} className="flex-1 py-2.5 bg-[var(--gold)] text-[var(--ink)] text-sm uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors disabled:opacity-50 rounded-md">{saving ? 'Guardando…' : isEdit ? 'Guardar cambios' : `Crear ${dias.size > 1 ? `${dias.size} horarios` : 'horario'}`}</button>
+          <button type="submit" form="horario-form" disabled={saving} className="flex-1 py-2.5 bg-[var(--gold)] text-[var(--on-accent)] text-sm uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors disabled:opacity-50 rounded-md">{saving ? 'Guardando…' : isEdit ? 'Guardar cambios' : `Crear ${dias.size > 1 ? `${dias.size} horarios` : 'horario'}`}</button>
         </div>
       }
     >
@@ -137,7 +137,7 @@ export function HorarioModal({ open, onClose, onSaved, editing }: Props) {
                   title={DIAS_FULL[i]}
                   className={`w-11 h-11 border font-bold font-['JetBrains_Mono'] text-sm transition-colors ${
                     active
-                      ? 'border-[var(--gold)] bg-[var(--gold)] text-[var(--ink)]'
+                      ? 'border-[var(--gold)] bg-[var(--gold)] text-[var(--on-accent)]'
                       : 'border-[var(--ink-line)] text-[var(--rock)] hover:border-[var(--rock)] hover:text-[var(--chalk)]'
                   }`}
                 >

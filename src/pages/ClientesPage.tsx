@@ -37,7 +37,7 @@ export function ClientesPage() {
         <h2 className="font-['Anton'] uppercase text-2xl">Alumnos</h2>
         <button
           onClick={() => setNuevoOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-[var(--gold)] text-[var(--ink)] text-xs uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors rounded-md"
+          className="flex items-center gap-2 px-4 py-2 bg-[var(--gold)] text-[var(--on-accent)] text-xs uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors rounded-md"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="square" d="M12 4v16m8-8H4" />
@@ -83,7 +83,7 @@ export function ClientesPage() {
                 <tr
                   key={c.id}
                   onClick={() => setFichaId(c.id)}
-                  className="border-t border-[var(--ink-line)] hover:bg-[rgb(255_255_255/0.03)] cursor-pointer transition-colors"
+                  className="border-t border-[var(--ink-line)] hover:bg-[var(--overlay-03)] cursor-pointer transition-colors"
                 >
                   <td className="px-4 py-3 text-[var(--chalk)]">{c.nombre}</td>
                   <td className="px-4 py-3 text-[var(--rock)] hidden sm:table-cell truncate">{c.email}</td>

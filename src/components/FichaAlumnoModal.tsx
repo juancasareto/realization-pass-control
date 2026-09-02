@@ -117,12 +117,12 @@ export function FichaAlumnoModal({ clienteId, open, onClose, onUpdated }: Props)
         !cliente ? null : modo === 'view' ? (
           <div className="flex gap-3">
             <button onClick={onClose} className="flex-1 py-2.5 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] text-sm uppercase tracking-wide transition-colors rounded-md">Cerrar</button>
-            <button onClick={entrarEdicion} className="flex-1 py-2.5 bg-[var(--gold)] text-[var(--ink)] text-sm uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors rounded-md">Editar</button>
+            <button onClick={entrarEdicion} className="flex-1 py-2.5 bg-[var(--gold)] text-[var(--on-accent)] text-sm uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors rounded-md">Editar</button>
           </div>
         ) : (
           <div className="flex gap-3">
             <button onClick={() => setModo('view')} className="flex-1 py-2.5 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] text-sm uppercase tracking-wide transition-colors rounded-md">Cancelar</button>
-            <button type="submit" form="editar-alumno-form" disabled={saving} className="flex-1 py-2.5 bg-[var(--gold)] text-[var(--ink)] text-sm uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors rounded-md disabled:opacity-50">{saving ? 'Guardando…' : 'Guardar'}</button>
+            <button type="submit" form="editar-alumno-form" disabled={saving} className="flex-1 py-2.5 bg-[var(--gold)] text-[var(--on-accent)] text-sm uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors rounded-md disabled:opacity-50">{saving ? 'Guardando…' : 'Guardar'}</button>
           </div>
         )
       }
@@ -136,7 +136,7 @@ export function FichaAlumnoModal({ clienteId, open, onClose, onUpdated }: Props)
             {cliente.fotoUrl ? (
               <img src={cliente.fotoUrl} alt={cliente.nombre} className="w-16 h-16 rounded-full object-cover shrink-0" />
             ) : (
-              <div className="w-16 h-16 rounded-full bg-[var(--gold)] text-[var(--ink)] flex items-center justify-center text-xl font-bold font-['JetBrains_Mono'] shrink-0">
+              <div className="w-16 h-16 rounded-full bg-[var(--gold)] text-[var(--on-accent)] flex items-center justify-center text-xl font-bold font-['JetBrains_Mono'] shrink-0">
                 {getInitials(cliente.nombre)}
               </div>
             )}

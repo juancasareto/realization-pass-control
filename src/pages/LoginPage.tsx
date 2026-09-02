@@ -25,7 +25,7 @@ export function LoginPage() {
           className="w-full mb-3 bg-transparent border border-[var(--ink-line)] px-3 py-2 text-[var(--chalk)] rounded-md" />
         <input type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)}
           className="w-full mb-4 bg-transparent border border-[var(--ink-line)] px-3 py-2 text-[var(--chalk)] rounded-md" />
-        <button type="submit" className="w-full bg-[var(--gold)] text-[var(--ink)] font-bold py-3 rounded-md">Entrar</button>
+        <button type="submit" className="w-full bg-[var(--gold)] text-[var(--on-accent)] font-bold py-3 rounded-md">Entrar</button>
       </form>
     </div>
   );

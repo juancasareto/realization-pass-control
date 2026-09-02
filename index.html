@@ -12,6 +12,12 @@
     />
   </head>
   <body>
+    <script>
+      try {
+        var t = localStorage.getItem('rpc_theme');
+        document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+      } catch (e) {}
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

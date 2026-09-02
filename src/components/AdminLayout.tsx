@@ -1,5 +1,6 @@
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../lib/AuthContext';
+import { useTheme } from '../lib/ThemeContext';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { MiPerfilModal } from './MiPerfilModal';
 
@@ -50,6 +51,7 @@ function getSectionTitle(pathname: string): string {
 
 export function AdminLayout() {
   const { nombre, email, rol, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [perfilOpen, setPerfilOpen] = useState(false);
@@ -76,7 +78,7 @@ export function AdminLayout() {
   const sidebarContent = (
     <aside className="w-64 h-full flex flex-col bg-[var(--ink-raised)] border-r border-[var(--ink-line)]">
       {/* Logo */}
-      <div className="px-5 py-4 border-b border-[color:rgb(255_255_255/0.06)] flex items-center gap-3">
+      <div className="px-5 py-4 border-b border-[color:var(--overlay-06)] flex items-center gap-3">
         <img src="/logo.jpeg" alt="Realization" className="h-12 w-12 rounded-full object-cover" />
         <div>
           <span className="font-['Anton'] text-[var(--chalk)] uppercase text-sm tracking-wide block leading-tight">Realization</span>
@@ -85,12 +87,12 @@ export function AdminLayout() {
       </div>
 
       {/* User identity */}
-      <div className="px-4 py-4 border-b border-[color:rgb(255_255_255/0.06)]">
+      <div className="px-4 py-4 border-b border-[color:var(--overlay-06)]">
         <button
           onClick={() => { setPerfilOpen(true); setMobileOpen(false); }}
-          className="flex items-center gap-3 bg-[rgb(255_255_255/0.04)] hover:bg-[rgb(255_255_255/0.07)] p-3 w-full text-left transition-colors rounded-md"
+          className="flex items-center gap-3 bg-[var(--overlay-04)] hover:bg-[var(--overlay-07)] p-3 w-full text-left transition-colors rounded-md"
         >
-          <div className="w-9 h-9 rounded-full bg-[var(--gold)] text-[var(--ink)] flex items-center justify-center text-xs font-bold font-['JetBrains_Mono'] shrink-0">
+          <div className="w-9 h-9 rounded-full bg-[var(--gold)] text-[var(--on-accent)] flex items-center justify-center text-xs font-bold font-['JetBrains_Mono'] shrink-0">
             {initials}
           </div>
           <div className="min-w-0 flex-1">
@@ -106,7 +108,7 @@ export function AdminLayout() {
         <div ref={navRef} className="relative">
           <div
             ref={pillRef}
-            className="absolute left-0 right-0 bg-[rgb(255_255_255/0.06)] transition-all duration-200 ease-out pointer-events-none opacity-0 rounded-md"
+            className="absolute left-0 right-0 bg-[var(--overlay-06)] transition-all duration-200 ease-out pointer-events-none opacity-0 rounded-md"
           />
           {NAV.map((item) => (
             <NavLink
@@ -128,7 +130,7 @@ export function AdminLayout() {
       </div>
 
       {/* Footer */}
-      <div className="px-4 py-4 border-t border-[color:rgb(255_255_255/0.06)]">
+      <div className="px-4 py-4 border-t border-[color:var(--overlay-06)]">
         <button
           onClick={logout}
           className="flex items-center gap-2 text-xs text-[var(--rock-dim)] hover:text-[var(--chalk)] transition-colors uppercase tracking-wide"
@@ -173,18 +175,37 @@ export function AdminLayout() {
             <h1 className="font-['Anton'] text-lg uppercase tracking-wide text-[var(--chalk)] truncate">{sectionTitle}</h1>
           </div>
 
-          <button
-            onClick={() => setPerfilOpen(true)}
-            className="flex items-center gap-3 hover:bg-[rgb(255_255_255/0.04)] px-2 py-1 transition-colors min-w-0 rounded-md"
-          >
-            <div className="hidden sm:block text-right min-w-0">
-              <p className="text-sm text-[var(--chalk)] truncate leading-tight">{nombre}</p>
-              <p className="text-[11px] text-[var(--rock)] truncate leading-tight">{email}</p>
-            </div>
-            <div className="w-8 h-8 rounded-full bg-[var(--gold)] text-[var(--ink)] flex items-center justify-center text-xs font-bold font-['JetBrains_Mono'] shrink-0">
-              {initials}
-            </div>
-          </button>
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={toggleTheme}
+              title={theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
+              aria-label={theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
+              className="w-8 h-8 flex items-center justify-center text-[var(--rock)] hover:text-[var(--chalk)] hover:bg-[var(--overlay-04)] transition-colors rounded-md"
+            >
+              {theme === 'dark' ? (
+                <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="square" d="M12 3v1.5m0 15V21m9-9h-1.5M4.5 12H3m15.36-6.36l-1.06 1.06M6.7 17.3l-1.06 1.06m0-12.72L6.7 6.7m10.6 10.6l1.06 1.06M16.5 12a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
+                </svg>
+              ) : (
+                <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="square" strokeLinejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                </svg>
+              )}
+            </button>
+
+            <button
+              onClick={() => setPerfilOpen(true)}
+              className="flex items-center gap-3 hover:bg-[var(--overlay-04)] px-2 py-1 transition-colors min-w-0 rounded-md"
+            >
+              <div className="hidden sm:block text-right min-w-0">
+                <p className="text-sm text-[var(--chalk)] truncate leading-tight">{nombre}</p>
+                <p className="text-[11px] text-[var(--rock)] truncate leading-tight">{email}</p>
+              </div>
+              <div className="w-8 h-8 rounded-full bg-[var(--gold)] text-[var(--on-accent)] flex items-center justify-center text-xs font-bold font-['JetBrains_Mono'] shrink-0">
+                {initials}
+              </div>
+            </button>
+          </div>
         </header>
 
         {/* Page content */}

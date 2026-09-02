@@ -25,7 +25,7 @@ export function QuickActionsBar({ onSaved }: Props) {
           <button
             key={a.key}
             onClick={() => setAbierto(a.key)}
-            className="flex items-center gap-3 border border-[var(--ink-line)] bg-[var(--ink-raised)] hover:border-[var(--rock)] hover:bg-[rgb(255_255_255/0.03)] p-4 text-left transition-colors group rounded-md"
+            className="flex items-center gap-3 border border-[var(--ink-line)] bg-[var(--ink-raised)] hover:border-[var(--rock)] hover:bg-[var(--overlay-03)] p-4 text-left transition-colors group rounded-md"
           >
             <div
               className="w-10 h-10 flex items-center justify-center border shrink-0 rounded-md"

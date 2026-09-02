@@ -38,7 +38,7 @@ export function CalendarioPage() {
           <option value="FERIADO">Feriado (aviso)</option>
         </select>
         <input placeholder="Nota (opcional)" value={nota} onChange={(e) => setNota(e.target.value)} className="flex-1 bg-transparent border border-[var(--ink-line)] px-3 py-2 text-sm rounded-md" />
-        <button type="submit" className="bg-[var(--gold)] text-[var(--ink)] font-bold px-4 py-2 text-sm rounded-md">Agregar</button>
+        <button type="submit" className="bg-[var(--gold)] text-[var(--on-accent)] font-bold px-4 py-2 text-sm rounded-md">Agregar</button>
       </form>
       <ul>
         {dias.map((d) => (

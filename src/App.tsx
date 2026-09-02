@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './lib/AuthContext';
+import { ThemeProvider } from './lib/ThemeContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AdminLayout } from './components/AdminLayout';
 import { LoginPage } from './pages/LoginPage';
@@ -15,24 +16,26 @@ import { CobrosPage } from './pages/CobrosPage';
 
 export default function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Navigate to="/admin" replace />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
-            <Route index element={<DashboardHoyPage />} />
-            <Route path="clientes" element={<ClientesPage />} />
-            <Route path="clientes/:id" element={<FichaClientePage />} />
-            <Route path="clientes/:clienteId/vender" element={<VentaPasePage />} />
-            <Route path="reservas" element={<ReservasPage />} />
-            <Route path="modalidades" element={<ModalidadesPage />} />
-            <Route path="horarios" element={<HorariosPage />} />
-            <Route path="calendario" element={<CalendarioPage />} />
-            <Route path="cobros" element={<CobrosPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Navigate to="/admin" replace />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
+              <Route index element={<DashboardHoyPage />} />
+              <Route path="clientes" element={<ClientesPage />} />
+              <Route path="clientes/:id" element={<FichaClientePage />} />
+              <Route path="clientes/:clienteId/vender" element={<VentaPasePage />} />
+              <Route path="reservas" element={<ReservasPage />} />
+              <Route path="modalidades" element={<ModalidadesPage />} />
+              <Route path="horarios" element={<HorariosPage />} />
+              <Route path="calendario" element={<CalendarioPage />} />
+              <Route path="cobros" element={<CobrosPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }

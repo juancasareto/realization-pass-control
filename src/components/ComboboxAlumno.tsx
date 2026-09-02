@@ -102,8 +102,8 @@ export function ComboboxAlumno({ value, onChange, placeholder = 'Buscar alumnoâ€
               key={a.id}
               type="button"
               onClick={() => { onChange(a); setQuery(''); setOpen(false); }}
-              className={`w-full text-left px-3 py-2 hover:bg-[rgb(255_255_255/0.05)] transition-colors ${
-                value?.id === a.id ? 'bg-[rgb(255_255_255/0.05)]' : ''
+              className={`w-full text-left px-3 py-2 hover:bg-[var(--overlay-05)] transition-colors ${
+                value?.id === a.id ? 'bg-[var(--overlay-05)]' : ''
               }`}
             >
               <div className="flex items-center justify-between gap-2">

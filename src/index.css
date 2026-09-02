@@ -1,11 +1,13 @@
 @import "tailwindcss";
 
 :root {
+  /* Tema oscuro (por defecto) */
   --ink: #1f1e1c;
   --ink-raised: #0b0a09;
   --ink-line: #3a362c;
   --gold: #f1b400;
   --gold-soft: #ffd54a;
+  --on-accent: #0b0a09; /* texto oscuro fijo sobre superficies doradas/brillantes, no cambia con el tema */
   --chalk: #f3f0e8;
   --rock: #a49c8a;
   --rock-dim: #6b6456;
@@ -13,6 +15,34 @@
   --warn: #d97b29;
   --crit: #e1503d;
   --aviso: #e08a3c;
+
+  /* Overlays: tinte sutil sobre la superficie, blanco en oscuro / negro en claro */
+  --overlay-03: rgb(255 255 255 / 0.03);
+  --overlay-04: rgb(255 255 255 / 0.04);
+  --overlay-05: rgb(255 255 255 / 0.05);
+  --overlay-06: rgb(255 255 255 / 0.06);
+  --overlay-07: rgb(255 255 255 / 0.07);
+}
+
+:root[data-theme="light"] {
+  --ink: #f2f1ee;
+  --ink-raised: #ffffff;
+  --ink-line: #e0ddd4;
+  --gold: #a8710c;
+  --gold-soft: #8a5d09;
+  --chalk: #211f1c;
+  --rock: #6b6456;
+  --rock-dim: #948c78;
+  --good: #2f7d4f;
+  --warn: #b0621d;
+  --crit: #c1392b;
+  --aviso: #b0621d;
+
+  --overlay-03: rgb(0 0 0 / 0.035);
+  --overlay-04: rgb(0 0 0 / 0.045);
+  --overlay-05: rgb(0 0 0 / 0.055);
+  --overlay-06: rgb(0 0 0 / 0.065);
+  --overlay-07: rgb(0 0 0 / 0.08);
 }
 
 body { background: var(--ink); color: var(--chalk); font-family: 'Manrope', -apple-system, sans-serif; }

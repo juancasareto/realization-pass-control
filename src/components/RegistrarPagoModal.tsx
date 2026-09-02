@@ -93,7 +93,7 @@ export function RegistrarPagoModal({ open, onClose, onSaved }: Props) {
       footer={
         <div className="flex gap-3">
           <button type="button" onClick={handleClose} className="flex-1 py-2.5 border border-[var(--ink-line)] text-[var(--rock)] hover:text-[var(--chalk)] hover:border-[var(--rock)] text-sm uppercase tracking-wide transition-colors rounded-md">Cancelar</button>
-          <button type="submit" form="pago-form" disabled={saving} className="flex-1 py-2.5 bg-[var(--gold)] text-[var(--ink)] text-sm uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors disabled:opacity-50 rounded-md">{saving ? 'Guardando…' : 'Registrar pago'}</button>
+          <button type="submit" form="pago-form" disabled={saving} className="flex-1 py-2.5 bg-[var(--gold)] text-[var(--on-accent)] text-sm uppercase tracking-wide font-bold hover:bg-[var(--gold-soft)] transition-colors disabled:opacity-50 rounded-md">{saving ? 'Guardando…' : 'Registrar pago'}</button>
         </div>
       }
     >
